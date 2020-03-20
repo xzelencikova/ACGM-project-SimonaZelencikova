@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Public Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Private Source Files">
+      <UniqueIdentifier>{fa019b39-19dd-439b-902c-5008803ae940}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private Source Files\Models">
+      <UniqueIdentifier>{8dd789c2-4879-4957-93c4-c69b37c896f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public Source Files\Models">
+      <UniqueIdentifier>{7a2567e6-8cda-4878-ada3-66323c1c7295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private Source Files\Raytracing">
+      <UniqueIdentifier>{b6d9103e-6479-4b9f-b10d-9c1495bbd54c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public Source Files\Raytracing">
+      <UniqueIdentifier>{d950d1f4-2162-421b-a69c-ba10be450fa0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\ACGM_RayTracer_lib\Scene.h">
+      <Filter>Public Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\Model.h">
+      <Filter>Public Source Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\Plane.h">
+      <Filter>Public Source Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\Camera.h">
+      <Filter>Public Source Files\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\Ray.h">
+      <Filter>Public Source Files\Raytracing</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>Private Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Model.cpp">
+      <Filter>Private Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Plane.cpp">
+      <Filter>Private Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>Private Source Files\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ray.cpp">
+      <Filter>Private Source Files\Raytracing</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
