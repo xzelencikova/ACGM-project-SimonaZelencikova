@@ -15,7 +15,7 @@ namespace acgm
       glm::vec3 GetDirection();
 
       float Intersection(std::shared_ptr<acgm::Plane> plane);
-      bool IntersectionWithTriangle(glm::vec3 &positionX, glm::vec3 &positionY, glm::vec3 &positionZ);
+      float IntersectionWithTriangle(glm::vec3 &positionX, glm::vec3 &positionY, glm::vec3 &positionZ);
   private:
       glm::vec3 origin;
       glm::vec3 direction;

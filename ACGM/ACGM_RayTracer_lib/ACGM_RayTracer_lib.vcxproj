@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ACGM_RayTracer_lib\Camera.h" />
+    <ClInclude Include="include\ACGM_RayTracer_lib\DirectionalLight.h" />
     <ClInclude Include="include\ACGM_RayTracer_lib\Model.h" />
     <ClInclude Include="include\ACGM_RayTracer_lib\Plane.h" />
     <ClInclude Include="include\ACGM_RayTracer_lib\Ray.h" />
@@ -27,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\DirectionalLight.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\Plane.cpp" />
     <ClCompile Include="src\Ray.cpp" />

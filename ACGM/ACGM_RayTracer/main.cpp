@@ -24,9 +24,9 @@ int main()
   bunny.Import("3d-models/bunny.fbx");
 
   cogs::Transform transform;
-  transform.SetRotation(glm::quat(1.0, 0.2f, 0.5f, 0.2f));
+  transform.SetRotation(glm::quat(1.0f, 0.2f, 0.5f, 0.35f));
   printf("%f %f %f %f", transform.GetRotation().w, transform.GetRotation().x, transform.GetRotation().y, transform.GetRotation().z);
-  transform.SetPosition(glm::vec3(0, 0, -4.5f));
+  transform.SetPosition(glm::vec3(-1.0f, 0.0f, -7.0f));
   bunny.points->Transform(transform);
 
   acgm::Model bunny_obj = acgm::Model(cogs::Color3f(0.9f, 1.0f, 0.0f), bunny);

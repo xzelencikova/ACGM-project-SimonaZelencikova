@@ -61,12 +61,14 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer, acgm::Model &bu
              
                 if (t >= 0 && t < min) 
                 {
-                    float intensity = 1 / t;
+                    float intensity = 1.5 / t;
                     min = t;
                     std::shared_ptr<acgm::Model> model = models_.at(i);
                     renderer.SetPixel(row, column, model->Color() * intensity);
                 }
             }
+
+            min = 10000.0f;
 
             for (int j = 0; j < bunny.GetBunny().faces->GetFaceCount(); j++)
             {
@@ -74,11 +76,28 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer, acgm::Model &bu
                 glm::uint vertY = bunny.GetBunny().faces->GetFaces()[j].y;
                 glm::uint vertZ = bunny.GetBunny().faces->GetFaces()[j].z;
                 
-                bool intersect = ray->IntersectionWithTriangle(bunny.GetBunny().points->GetPositions()[vertX], bunny.GetBunny().points->GetPositions()[vertY], bunny.GetBunny().points->GetPositions()[vertZ]);
+                float intersect = ray->IntersectionWithTriangle(bunny.GetBunny().points->GetPositions()[vertX], bunny.GetBunny().points->GetPositions()[vertY], bunny.GetBunny().points->GetPositions()[vertZ]);
                 
-                if (intersect == true)
+                if (intersect > 0 && intersect < min)
                 {
-                    renderer.SetPixel(row, column, bunny.Color());
+                    min = intersect;
+
+                    std::shared_ptr < acgm::Camera> cameraLight = std::make_shared<acgm::Camera>(glm::vec3(column, 0.0f, -7.0f), glm::vec3(column, 1.0f, -7.0f));
+                    glm::vec3 directionToLight = glm::normalize(cameraLight->GetU() + x * cameraLight->GetW() + y * cameraLight->GetV());
+                    std::shared_ptr < acgm::Ray> rayLight = std::make_shared<acgm::Ray>(cameraLight->GetPosition(), directionToLight);
+
+                    float intersectToLight = rayLight->IntersectionWithTriangle(bunny.GetBunny().points->GetPositions()[vertX], bunny.GetBunny().points->GetPositions()[vertY], bunny.GetBunny().points->GetPositions()[vertZ]);
+                    float ambient = 0.1;
+
+                    if(intersect < intersectToLight)
+                    {
+                        renderer.SetPixel(row, column, bunny.Color() * ambient);
+                    }
+                    else 
+                    {
+                        ambient = ambient + (1 - ambient) * (2 / intersect);
+                        renderer.SetPixel(row, column, bunny.Color() * ambient);
+                    }
                 }
             }
 

@@ -31,10 +31,13 @@
     <ClInclude Include="include\ACGM_RayTracer_lib\Plane.h">
       <Filter>Public Source Files\Models</Filter>
     </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\Ray.h">
+      <Filter>Public Source Files\Raytracing</Filter>
+    </ClInclude>
     <ClInclude Include="include\ACGM_RayTracer_lib\Camera.h">
       <Filter>Public Source Files\Raytracing</Filter>
     </ClInclude>
-    <ClInclude Include="include\ACGM_RayTracer_lib\Ray.h">
+    <ClInclude Include="include\ACGM_RayTracer_lib\DirectionalLight.h">
       <Filter>Public Source Files\Raytracing</Filter>
     </ClInclude>
   </ItemGroup>
@@ -52,6 +55,9 @@
       <Filter>Private Source Files\Raytracing</Filter>
     </ClCompile>
     <ClCompile Include="src\Ray.cpp">
+      <Filter>Private Source Files\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectionalLight.cpp">
       <Filter>Private Source Files\Raytracing</Filter>
     </ClCompile>
   </ItemGroup>
