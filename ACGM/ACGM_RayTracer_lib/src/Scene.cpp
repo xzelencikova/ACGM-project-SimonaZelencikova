@@ -97,6 +97,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer, acgm::Model &bu
                         // create shadow light
                         std::shared_ptr < acgm::Ray> rayLight = std::make_shared<acgm::Ray>(intersection_point, glm::normalize(light->GetDirectionToLight(intersection_point)));
                         float intersect_to_light = rayLight->IntersectionWithTriangle(bunny.GetBunny().points->GetPositions()[vertNewX], bunny.GetBunny().points->GetPositions()[vertNewY], bunny.GetBunny().points->GetPositions()[vertNewZ]);
+                        
                         if (intersect_to_light > 0 && intersect_to_light < min_light_i)
                         {
                             min_light_i = intersect_to_light;
