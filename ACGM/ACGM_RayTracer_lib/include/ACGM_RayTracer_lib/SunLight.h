@@ -1,19 +1,20 @@
 #pragma once
 #include <glm/glm.hpp>
 
+#include <ACGM_RayTracer_lib/Light.h>
+
 namespace acgm
 {
     //! Representation of a ray
-    class SunLight
+    class SunLight : Light
     {
     public:
         explicit SunLight(float intensity, glm::vec3 direct);
 
-        float GetIntensity();
-        glm::vec3 GetDirection();
+        glm::vec3 GetDirectionToLight(const glm::vec3& point) const;
+        float GetIntensityAt(const glm::vec3& point) const;
 
     private:
-        float intensity;
         glm::vec3 direction;
     };
 }

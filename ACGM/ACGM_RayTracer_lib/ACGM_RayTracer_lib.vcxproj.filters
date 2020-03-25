@@ -20,6 +20,18 @@
     <Filter Include="Public Source Files\Raytracing">
       <UniqueIdentifier>{d950d1f4-2162-421b-a69c-ba10be450fa0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private Source Files\Light">
+      <UniqueIdentifier>{d0f6ebf9-5eb8-4323-a838-8cd63f0c0818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private Source Files\Shader">
+      <UniqueIdentifier>{23553cb4-766c-4b4f-b180-036ada39330e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public Source Files\Light">
+      <UniqueIdentifier>{fe87afaa-ca7e-48a0-b040-7f628fd83197}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public Source Files\Shader">
+      <UniqueIdentifier>{46ef4c13-74e3-487c-96e4-a1424c126980}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ACGM_RayTracer_lib\Scene.h">
@@ -37,8 +49,23 @@
     <ClInclude Include="include\ACGM_RayTracer_lib\Camera.h">
       <Filter>Public Source Files\Raytracing</Filter>
     </ClInclude>
-    <ClInclude Include="include\ACGM_RayTracer_lib\DirectionalLight.h">
-      <Filter>Public Source Files\Raytracing</Filter>
+    <ClInclude Include="include\ACGM_RayTracer_lib\PointLight.h">
+      <Filter>Public Source Files\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\SpotLight.h">
+      <Filter>Public Source Files\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\SunLight.h">
+      <Filter>Public Source Files\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\Light.h">
+      <Filter>Public Source Files\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\PhongShader.h">
+      <Filter>Public Source Files\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\CheckerShader.h">
+      <Filter>Public Source Files\Shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -57,8 +84,26 @@
     <ClCompile Include="src\Ray.cpp">
       <Filter>Private Source Files\Raytracing</Filter>
     </ClCompile>
-    <ClCompile Include="src\DirectionalLight.cpp">
-      <Filter>Private Source Files\Raytracing</Filter>
+    <ClCompile Include="src\PointLight.cpp">
+      <Filter>Private Source Files\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpotLight.cpp">
+      <Filter>Private Source Files\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SunLight.cpp">
+      <Filter>Private Source Files\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Light.cpp">
+      <Filter>Private Source Files\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PhongShader.cpp">
+      <Filter>Private Source Files\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CheckerShader.cpp">
+      <Filter>Private Source Files\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader.cpp">
+      <Filter>Private Source Files\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,8 @@ public:
   //! Construct with a HIRO resource.
   explicit RayTracerGadget(const hiro::Resource *res);
 
+  void RayTracerGadget::GenerateGui(hiro::GuiGenerator& gui) override;
+
   void Initialize() override;
 
 private:
