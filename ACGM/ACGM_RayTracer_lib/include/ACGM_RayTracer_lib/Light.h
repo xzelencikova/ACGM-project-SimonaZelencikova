@@ -11,8 +11,8 @@ namespace acgm
         virtual ~Light() = default;
 
         float GetIntensity() const;
-        glm::vec3 GetDirectionToLight(const glm::vec3& point) const;
-        float GetIntensityAt(const glm::vec3& point) const;
+        virtual glm::vec3 GetDirectionToLight(const glm::vec3& point) const;
+        virtual float GetIntensityAt(const glm::vec3& point) const;
 
     private:
         float intensity;

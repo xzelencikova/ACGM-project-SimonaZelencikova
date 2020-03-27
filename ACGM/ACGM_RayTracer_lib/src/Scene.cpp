@@ -47,18 +47,21 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 ray_hit = models_.at(i)->Intersect(*ray);
 
                 if (ray_hit == std::nullopt) continue;
-
-                input.direction_to_light = light->GetDirectionToLight(ray_hit->point);
-                input.light_intensity = light->GetIntensityAt(ray_hit->point);
-                input.normal = ray_hit->normal;
-                input.point = ray_hit->point;
-                input.direction_to_eye = ray_hit->point - ray->GetOrigin();
-                // ! Cast Shadow Ray
-                std::shared_ptr <acgm::Ray> shadow_ray = std::make_shared<acgm::Ray>(input.point, glm::normalize(input.direction_to_light), bias);
-                shadow_ray_hit = models_.at(i)->Intersect(*shadow_ray);
              
-                if (ray_hit->ray_param >= 0 && ray_hit->ray_param < min) 
+                if (ray_hit->ray_param > 0 && ray_hit->ray_param < min) 
                 {
+
+                    input.direction_to_light = light->GetDirectionToLight(ray_hit->point);
+                    input.light_intensity = light->GetIntensityAt(ray_hit->point);
+                    input.normal = ray_hit->normal;
+                    input.point = ray_hit->point;
+                    input.direction_to_eye = ray_hit->point - ray->GetOrigin();
+                    // ! Cast Shadow Ray
+                    std::shared_ptr <acgm::Ray> shadow_ray = std::make_shared<acgm::Ray>(input.point, glm::normalize(input.direction_to_light), bias);
+                    shadow_ray_hit = models_.at(i)->Intersect(*shadow_ray);
+
+                    if (shadow_ray_hit == std::nullopt) continue;
+
                     min = ray_hit->ray_param;
 
                     if (ray_hit->ray_param < shadow_ray_hit->ray_param)
@@ -78,4 +81,5 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
         y -= dy;
         x = -tan(camera->GetFovYRad() / 2.);
     }
+    printf("Done rendering");
 }

@@ -174,7 +174,7 @@ std::shared_ptr<acgm::Shader> acgm::SceneImporter::ReadShader()
     const auto diffuse = ReadFloat();
     const auto specular = ReadFloat();
     GetLine();
-    // shader = #TODO new instance of PhongShader object
+
     shader = std::make_shared<acgm::PhongShader>(color, shininess, ambient, diffuse, specular);
   }
   if (shader_type == SHADERTYPE_CHECKER)
@@ -182,7 +182,7 @@ std::shared_ptr<acgm::Shader> acgm::SceneImporter::ReadShader()
     const auto cube_size = ReadFloat();
     const auto shader0 = ReadShader();
     const auto shader1 = ReadShader();
-    // shader =  #TODO new instance of CheckerShader object
+
     shader = std::make_shared<acgm::CheckerShader>(cube_size, shader0, shader1);
   }
   return shader;
@@ -236,7 +236,6 @@ std::shared_ptr<acgm::Scene> acgm::SceneImporter::ReadScene()
   const auto models = ReadModels();
   printf("Model imported");
 
-  // #TODO Create your scene object and set imported camera, light and models to it
   std::shared_ptr<acgm::Scene> scene = std::make_shared<acgm::Scene>(camera, light, models);
   return scene;
 }

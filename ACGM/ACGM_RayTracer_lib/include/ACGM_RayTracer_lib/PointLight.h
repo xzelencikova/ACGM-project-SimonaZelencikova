@@ -16,8 +16,8 @@ namespace acgm
         float GetLinearAttenuation();
         float GetQuadraticAttenuation();
 
-        glm::vec3 GetDirectionToLight(const glm::vec3& point) const;
-        float GetIntensityAt(const glm::vec3& point) const;
+        virtual glm::vec3 GetDirectionToLight(const glm::vec3& point) const override;
+        virtual float GetIntensityAt(const glm::vec3& point) const override;
 
     private:
         glm::vec3 position;

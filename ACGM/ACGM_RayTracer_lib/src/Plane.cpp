@@ -1,10 +1,8 @@
 #include <ACGM_RayTracer_lib/Plane.h>
 
 
-acgm::Plane::Plane(glm::vec3 plane_pt, glm::vec3 plane_norm, std::string name) : Model(name)
+acgm::Plane::Plane(glm::vec3 plane_pt, glm::vec3 plane_norm, std::string name) : Model(name), plane_point(plane_pt), plane_normal(plane_norm)
 {
-	plane_point = plane_pt;
-	plane_normal = plane_norm;
 }
 
 glm::vec3 acgm::Plane::GetPlanePoint() 
@@ -30,6 +28,8 @@ std::optional<acgm::HitResult> acgm::Plane::Intersect(acgm::Ray &ray) const
     hit.ray_param = glm::dot((plane_point - ray.GetOrigin()), plane_normal) / dot2;
     hit.normal = plane_normal;
     hit.point = ray.GetPoint(hit.ray_param);
+
+    printf("%f ", hit.ray_param);
 
     return hit;
 }
