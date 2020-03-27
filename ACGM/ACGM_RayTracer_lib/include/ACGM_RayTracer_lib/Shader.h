@@ -22,8 +22,6 @@ namespace acgm
         ~Shader() = default;
         explicit Shader(cogs::Color3f color);
 
-        void SetShaders(const std::shared_ptr<Shader> shader0, const std::shared_ptr<Shader> shader1);
-
         virtual cogs::Color3f CalculateColor(const ShaderInput& input) const;
 
     private:

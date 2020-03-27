@@ -25,7 +25,8 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
     std::shared_ptr <acgm::Ray> ray;
     glm::vec3 direction;
     float bias = 0.001;
-
+    printf("Pred cyklom Scene");
+    printf(" Models count: %d\n", models_.size());
   
     //! using OMP to parallelize rendering, default 4 threads for now
 //#pragma omp parallel for private(i, row, column, t, min) shared(direction, ray, renderer, x, y)
@@ -41,8 +42,12 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
             for (i = 0; i < models_.size(); i++)
             {
                 ShaderInput input;
+                // printf("Model %d", i);
 
                 ray_hit = models_.at(i)->Intersect(*ray);
+
+                if (ray_hit == std::nullopt) continue;
+
                 input.direction_to_light = light->GetDirectionToLight(ray_hit->point);
                 input.light_intensity = light->GetIntensityAt(ray_hit->point);
                 input.normal = ray_hit->normal;

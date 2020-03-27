@@ -6,6 +6,7 @@
 #include <ACGM_RayTracer_lib/Camera.h>
 #include <ACGM_RayTracer_lib/Model.h>
 #include <ACGM_RayTracer_lib/Light.h>
+#include <ACGM_RayTracer_lib/Shader.h>
 
 
 namespace acgm

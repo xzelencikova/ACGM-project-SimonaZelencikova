@@ -7,7 +7,7 @@ acgm::Shader::Shader(cogs::Color3f color):color(color)
 {
 }
 
-void acgm::Shader::SetShaders(const std::shared_ptr<acgm::Shader> shader0, const std::shared_ptr<acgm::Shader> shader1)
+acgm::Shader::Shader()
 {
 }
 

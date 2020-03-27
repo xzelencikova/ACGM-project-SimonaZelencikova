@@ -183,8 +183,7 @@ std::shared_ptr<acgm::Shader> acgm::SceneImporter::ReadShader()
     const auto shader0 = ReadShader();
     const auto shader1 = ReadShader();
     // shader =  #TODO new instance of CheckerShader object
-    shader = std::make_shared<acgm::CheckerShader>(cube_size);
-    shader->SetShaders(shader0, shader1);
+    shader = std::make_shared<acgm::CheckerShader>(cube_size, shader0, shader1);
   }
   return shader;
 }
@@ -231,8 +230,11 @@ std::shared_ptr<acgm::Light> acgm::SceneImporter::ReadLight()
 std::shared_ptr<acgm::Scene> acgm::SceneImporter::ReadScene()
 {
   const auto camera = ReadCamera();
+  printf("Camera imported");
   const auto light = ReadLight();
+  printf("Light imported");
   const auto models = ReadModels();
+  printf("Model imported");
 
   // #TODO Create your scene object and set imported camera, light and models to it
   std::shared_ptr<acgm::Scene> scene = std::make_shared<acgm::Scene>(camera, light, models);

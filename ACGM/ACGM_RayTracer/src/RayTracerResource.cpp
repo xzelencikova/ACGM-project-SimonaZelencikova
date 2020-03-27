@@ -13,7 +13,7 @@ RayTracerResource::RayTracerResource(const std::string &name)
   raster_renderer_ = std::make_shared<hiro::draw::RasterRenderer>();
 
   acgm::RenderOptions render_opt;
-  raster_renderer_->SetResolution({render_opt.resolution.x, render_opt.resolution.y });
+  raster_renderer_->SetResolution({ 512, 512 });//render_opt.resolution.x, render_opt.resolution.y });
 }
 
 hiro::PGadget RayTracerResource::CreateGadget()

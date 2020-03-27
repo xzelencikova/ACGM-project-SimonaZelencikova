@@ -12,10 +12,10 @@ std::string acgm::Model::GetName()
 
 void acgm::Model::SetShader(const std::shared_ptr<acgm::Shader> shader)
 {
-    this->shader = std::make_shared<acgm::Shader>(shader);
+    this->shader = shader;
 }
 
-std::shared_ptr<acgm::Shader> acgm::Model::GetShader()
+std::shared_ptr<acgm::Shader> acgm::Model::GetShader() const
 {
     return shader;
 }

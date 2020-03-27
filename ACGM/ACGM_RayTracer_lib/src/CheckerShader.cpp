@@ -1,19 +1,13 @@
 #include "ACGM_RayTracer_lib/CheckerShader.h"
 
-acgm::CheckerShader::CheckerShader(float cube_size):
-	cube_size(cube_size)
+acgm::CheckerShader::CheckerShader(float cube_size, const std::shared_ptr<Shader> shader0, const std::shared_ptr<Shader> shader1):
+	cube_size(cube_size), shader0(shader0), shader1(shader1)
 {
 }
 
 float acgm::CheckerShader::GetCubeSize()
 {
 	return cube_size;
-}
-
-void acgm::CheckerShader::SetShaders(const std::shared_ptr<acgm::Shader> shader0, const std::shared_ptr<acgm::Shader> shader1)
-{
-	this->shader0 = std::make_shared<acgm::Shader>(shader0);
-	this->shader1 = std::make_shared<acgm::Shader>(shader1);
 }
 
 cogs::Color3f acgm::CheckerShader::CalculateColor(const ShaderInput& input) const
