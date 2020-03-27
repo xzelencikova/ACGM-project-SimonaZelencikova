@@ -1,26 +1,32 @@
 #pragma once
 
-#include <COGS/Color.h>
-#include <COGS\Mesh.h>
+#include <Utils/Dialogs.h>
 
-
+#include <ACGM_RayTracer_lib/Ray.h>
+#include <ACGM_RayTracer_lib/Shader.h>
 
 namespace acgm
 {
+  struct HitResult {
+      glm::vec3 normal;
+      glm::vec3 point;
+      float ray_param;
+  };
   //! Model  - abstract base class for scene models
   class Model
   {
   public:
-    explicit Model(const cogs::Color3f &color);
+    explicit Model(const std::string name);
     virtual ~Model() = default;
 
-    explicit Model(const cogs::Color3f& color, cogs::Mesh bunny);
-    //! Get model color
-    const cogs::Color3f &Color() const;
-    cogs::Mesh GetBunny();
+    std::string GetName();
+    void SetShader(const std::shared_ptr<acgm::Shader> shader);
+    
+    std::shared_ptr<acgm::Shader> GetShader();
+    virtual std::optional<acgm::HitResult> Intersect(acgm::Ray & ray) const;
 
   private:
-    cogs::Color3f color_;
-    cogs::Mesh bunny;
+    std::string name;
+    std::shared_ptr<acgm::Shader> shader;
   };
 }

@@ -2,6 +2,7 @@
 
 #include "RayTracerGadget.h"
 #include "RayTracerResource.h"
+#include <ACGM_RayTracer_lib/SceneImporter.h>
 
 
 
@@ -11,8 +12,8 @@ RayTracerResource::RayTracerResource(const std::string &name)
 {
   raster_renderer_ = std::make_shared<hiro::draw::RasterRenderer>();
 
-  // #TODO Set the correct resolution
-  raster_renderer_->SetResolution({ 500, 500 });
+  acgm::RenderOptions render_opt;
+  raster_renderer_->SetResolution({render_opt.resolution.x, render_opt.resolution.y });
 }
 
 hiro::PGadget RayTracerResource::CreateGadget()

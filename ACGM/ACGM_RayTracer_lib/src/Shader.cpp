@@ -3,7 +3,11 @@
 
 #include <ACGM_RayTracer_lib/Shader.h>
 
-explicit acgm::Shader::Shader(cogs::Color3f color):color(color)
+acgm::Shader::Shader(cogs::Color3f color):color(color)
+{
+}
+
+void acgm::Shader::SetShaders(const std::shared_ptr<acgm::Shader> shader0, const std::shared_ptr<acgm::Shader> shader1)
 {
 }
 

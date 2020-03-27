@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glm/common.hpp>
+#include <glm/glm.hpp>
 
 namespace acgm
 {
@@ -9,29 +9,27 @@ namespace acgm
   {
   public:
     //! Camera constructor
-    Camera(
-      const glm::vec3 &position,
-      const glm::vec3 &target);
+    Camera(const glm::vec3 &position, const glm::vec3& up_direction, const glm::vec3& forward_direction, const float z_near, const float z_far, const float fov_y_rad);
 
     //! Get camera position
     const glm::vec3 &GetPosition() const;
-    const glm::vec3 &GetTarget() const;
-    
-    glm::vec3 &GetV();
-    glm::vec3 &GetU();
-    glm::vec3 &GetW();
-    
-    void SetCameraVectors(glm::vec3 v);
 
-  private:
-    //! Position in the scene
-    const glm::vec3 position_;
-    //! Target - the point the camera looks at
-    const glm::vec3 target_;
+    glm::vec3 GetUpDirection() const;    
+    glm::vec3 GetForwardDirection() const;
+    glm::vec3 GetRightDirection() const;
+
+    float GetFovYRad() const;
     
-    glm::vec3 v;
-    glm::vec3 u;
-    glm::vec3 w;
-    // #TODO Add other camera parameters
+  private:
+    const glm::vec3 position_;
+    
+    const glm::vec3 up_direction;
+    const glm::vec3 forward_direction;
+    glm::vec3 right_direction;
+
+    float z_near;
+    float z_far;
+    float fov_y_rad;
+    
   };
 }

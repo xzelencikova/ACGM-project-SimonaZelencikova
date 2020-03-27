@@ -1,9 +1,53 @@
-﻿  Scene.cpp
-D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(33,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(38,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(39,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(48,23): warning C4018: '<': signed/unsigned mismatch
-D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(50,33): warning C4018: '<': signed/unsigned mismatch
-D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(71,31): warning C4018: '<': signed/unsigned mismatch
-D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(88,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  ACGM_RayTracer_lib.vcxproj -> D:\Plocha\FIIT\Ing\ACGMProj\x64\Debug\ACGM_RayTracer_lib.lib
+﻿  CheckerShader.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\CheckerShader.cpp(21,20): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\CheckerShader.cpp(22,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\Program Files (x86)\Microsoft Visual Studio\2019\VC\Tools\MSVC\14.24.28314\include\xmemory(204,12): error C2664: 'acgm::Shader::Shader(const acgm::Shader &)': cannot convert argument 1 from 'const std::shared_ptr<acgm::Shader>' to 'cogs::Color3f'
+D:\Program Files (x86)\Microsoft Visual Studio\2019\VC\Tools\MSVC\14.24.28314\include\xmemory(204,33): message : No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\include\ACGM_RayTracer_lib\Shader.h(23,9): message : see declaration of 'acgm::Shader::Shader'
+D:\Program Files (x86)\Microsoft Visual Studio\2019\VC\Tools\MSVC\14.24.28314\include\memory(1490): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,const std::shared_ptr<_Ty>&>(_Ty &,const std::shared_ptr<_Ty> &) noexcept(false)' being compiled
+          with
+          [
+              _Ty=acgm::Shader
+          ]
+D:\Program Files (x86)\Microsoft Visual Studio\2019\VC\Tools\MSVC\14.24.28314\include\memory(1590): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<const std::shared_ptr<_Ty>&>(const std::shared_ptr<_Ty> &)' being compiled
+          with
+          [
+              _Ty=acgm::Shader
+          ]
+D:\Program Files (x86)\Microsoft Visual Studio\2019\VC\Tools\MSVC\14.24.28314\include\memory(1591): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<const std::shared_ptr<_Ty>&>(const std::shared_ptr<_Ty> &)' being compiled
+          with
+          [
+              _Ty=acgm::Shader
+          ]
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\CheckerShader.cpp(15): message : see reference to function template instantiation 'std::shared_ptr<acgm::Shader> std::make_shared<acgm::Shader,const std::shared_ptr<acgm::Shader>&>(const std::shared_ptr<acgm::Shader> &)' being compiled
+  Mesh.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Mesh.cpp(15,23): warning C4018: '<': signed/unsigned mismatch
+  SceneImporter.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\SceneImporter.cpp(80,24): warning C4267: 'argument': conversion from 'size_t' to 'glm::mat<4,4,float,0>::length_type', possible loss of data
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\SceneImporter.cpp(80,39): warning C4267: 'argument': conversion from 'size_t' to 'glm::mat<4,4,float,0>::length_type', possible loss of data
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\SceneImporter.cpp(80,54): warning C4267: 'argument': conversion from 'size_t' to 'glm::mat<4,4,float,0>::length_type', possible loss of data
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\SceneImporter.cpp(80,69): warning C4267: 'argument': conversion from 'size_t' to 'glm::mat<4,4,float,0>::length_type', possible loss of data
+  Model.cpp
+D:\Program Files (x86)\Microsoft Visual Studio\2019\VC\Tools\MSVC\14.24.28314\include\xmemory(204,12): error C2664: 'acgm::Shader::Shader(const acgm::Shader &)': cannot convert argument 1 from 'const std::shared_ptr<acgm::Shader>' to 'cogs::Color3f'
+D:\Program Files (x86)\Microsoft Visual Studio\2019\VC\Tools\MSVC\14.24.28314\include\xmemory(204,33): message : No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\include\ACGM_RayTracer_lib\Shader.h(23,9): message : see declaration of 'acgm::Shader::Shader'
+D:\Program Files (x86)\Microsoft Visual Studio\2019\VC\Tools\MSVC\14.24.28314\include\memory(1490): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,const std::shared_ptr<_Ty>&>(_Ty &,const std::shared_ptr<_Ty> &) noexcept(false)' being compiled
+          with
+          [
+              _Ty=acgm::Shader
+          ]
+D:\Program Files (x86)\Microsoft Visual Studio\2019\VC\Tools\MSVC\14.24.28314\include\memory(1590): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<const std::shared_ptr<_Ty>&>(const std::shared_ptr<_Ty> &)' being compiled
+          with
+          [
+              _Ty=acgm::Shader
+          ]
+D:\Program Files (x86)\Microsoft Visual Studio\2019\VC\Tools\MSVC\14.24.28314\include\memory(1591): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<const std::shared_ptr<_Ty>&>(const std::shared_ptr<_Ty> &)' being compiled
+          with
+          [
+              _Ty=acgm::Shader
+          ]
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Model.cpp(15): message : see reference to function template instantiation 'std::shared_ptr<acgm::Shader> std::make_shared<acgm::Shader,const std::shared_ptr<acgm::Shader>&>(const std::shared_ptr<acgm::Shader> &)' being compiled
+  Plane.cpp
+  Triangle.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Triangle.cpp(22,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...

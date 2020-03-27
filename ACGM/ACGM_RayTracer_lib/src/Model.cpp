@@ -1,26 +1,27 @@
 #include <ACGM_RayTracer_lib/Model.h>
 
-
-
-acgm::Model::Model(const cogs::Color3f &color)
-  : color_(color)
+acgm::Model::Model(const std::string name)
+  : name(name)
 {
 }
 
-acgm::Model::Model(const cogs::Color3f& color, cogs::Mesh bunny)
+std::string acgm::Model::GetName()
 {
-    color_ = color;
-    this->bunny = bunny;
+    return name;
 }
 
-const cogs::Color3f &acgm::Model::Color() const
+void acgm::Model::SetShader(const std::shared_ptr<acgm::Shader> shader)
 {
-  return color_;
+    this->shader = std::make_shared<acgm::Shader>(shader);
 }
 
-cogs::Mesh acgm::Model::GetBunny()
+std::shared_ptr<acgm::Shader> acgm::Model::GetShader()
 {
-    return bunny;
+    return shader;
 }
 
-// #TODO Implement your functionality here
+std::optional<acgm::HitResult> acgm::Model::Intersect(acgm::Ray& ray) const
+{
+    acgm::HitResult result;
+    return result;
+}

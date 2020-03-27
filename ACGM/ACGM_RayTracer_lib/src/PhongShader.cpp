@@ -1,9 +1,8 @@
 #include "ACGM_RayTracer_lib/PhongShader.h"
 
 acgm::PhongShader::PhongShader(cogs::Color3f color, float shininess,
-    float ambient, float diffuse, float specular)
+    float ambient, float diffuse, float specular): Shader(color)
 {
-    this->color = color;
     this->shininess = shininess;
     this->ambient = ambient;
     this->diffuse = diffuse;
@@ -32,6 +31,14 @@ float acgm::PhongShader::GetSpecular()
 
 cogs::Color3f acgm::PhongShader::CalculateColor(const ShaderInput& input) const
 {
+    // ! Calculate Phong Ambient Shading
+    float ambient_phong;
+
+    if (input.is_point_in_shadow) {
+        ambient_phong = ambient;
+    }
+    else ambient_phong = ambient + ((1 - ambient) * input.light_intensity);
+
     // ! Calculate cosine angle and Phong Diffuse Shading
     float size_normal = pow(input.normal.x, 2) + pow(input.normal.y, 2) + pow(input.normal.z, 2);
     float size_light_direction = pow(input.direction_to_light.x, 2) + pow(input.direction_to_light.y, 2) + pow(input.direction_to_light.z, 2);
@@ -42,5 +49,5 @@ cogs::Color3f acgm::PhongShader::CalculateColor(const ShaderInput& input) const
     glm::vec3 half_vector = glm::normalize(input.direction_to_eye + input.direction_to_light);
     float specular_phong = specular * input.light_intensity * pow(glm::dot(input.normal, half_vector), shininess);
 
-    return acgm::Shader::CalculateColor(input) * (ambient + diffuse_phong + specular_phong);
+    return Shader::CalculateColor(input) * (ambient_phong + diffuse_phong + specular_phong);
 }

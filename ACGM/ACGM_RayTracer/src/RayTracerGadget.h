@@ -15,6 +15,7 @@ public:
   explicit RayTracerGadget(const hiro::Resource *res);
 
   void RayTracerGadget::GenerateGui(hiro::GuiGenerator& gui) override;
+  static void RayTracerGadget::ImportAndRender(std::string fileName);
 
   void Initialize() override;
 

@@ -1,6 +1,5 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "Plane.h"
 
 
 namespace acgm
@@ -9,15 +8,16 @@ namespace acgm
   class Ray
   {
   public:
-      explicit Ray(glm::vec3 orig, glm::vec3 direct);
+      explicit Ray(glm::vec3 orig, glm::vec3 direct, const float bias);
 
       glm::vec3 GetOrigin();
       glm::vec3 GetDirection();
+      glm::vec3 GetPoint(const float t);
+      float GetBias();
 
-      float Intersection(std::shared_ptr<acgm::Plane> plane);
-      float IntersectionWithTriangle(glm::vec3 &positionX, glm::vec3 &positionY, glm::vec3 &positionZ);
   private:
       glm::vec3 origin;
       glm::vec3 direction;
+      const float bias;
   };
 }

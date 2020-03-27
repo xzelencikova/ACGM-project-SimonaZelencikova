@@ -1,0 +1,21 @@
+#pragma once
+#include <glm/glm.hpp>
+#include <ACGM_RayTracer_lib/Model.h>
+
+namespace acgm
+{
+    //! Representation of a triangle in mesh object
+    class Triangle
+    {
+    public:
+        explicit Triangle(const glm::vec3 vertexX, const glm::vec3 vertexY, const glm::vec3 vertexZ);
+        virtual ~Triangle() = default;
+
+        std::optional<acgm::HitResult> Intersect(acgm::Ray &ray) const;
+
+    private:
+        glm::vec3 vertexX;
+        glm::vec3 vertexY;
+        glm::vec3 vertexZ;
+    };
+}

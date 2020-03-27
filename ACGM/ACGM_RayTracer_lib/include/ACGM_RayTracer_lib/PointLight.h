@@ -5,8 +5,8 @@
 
 namespace acgm
 {
-    //! Representation of a ray
-    class PointLight: Light
+    //! Representation of a point light
+    class PointLight: public Light
     {
     public:
         explicit PointLight(float intensity, glm::vec3 position, float range, float linear_atten, float quadratic_atten);

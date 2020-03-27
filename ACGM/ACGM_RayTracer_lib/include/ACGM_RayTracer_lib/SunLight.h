@@ -6,7 +6,7 @@
 namespace acgm
 {
     //! Representation of a ray
-    class SunLight : Light
+    class SunLight : public Light
     {
     public:
         explicit SunLight(float intensity, glm::vec3 direct);

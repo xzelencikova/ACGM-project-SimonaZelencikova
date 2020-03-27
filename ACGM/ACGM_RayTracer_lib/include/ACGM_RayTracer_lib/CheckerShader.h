@@ -4,19 +4,20 @@
 
 namespace acgm
 {
-    //! Representation of a ray
-    class CheckerShader: Shader
+    //! Representation of checker shader
+    class CheckerShader: public Shader
     {
     public:
-        explicit CheckerShader(float cube_size, const PhongShader &shader0, const PhongShader &shader1);
+        explicit CheckerShader(float cube_size);
 
+        void SetShaders(const std::shared_ptr<Shader> shader0, const std::shared_ptr<Shader> shader1);
         float GetCubeSize();
 
-        cogs::Color3f CalculateColor(const ShaderInput& input) const;
+        virtual cogs::Color3f CalculateColor(const ShaderInput& input) const override;
 
     private:
         float cube_size;
-        const PhongShader shader0;
-        const PhongShader shader1;
+        std::shared_ptr<Shader> shader0;
+        std::shared_ptr<Shader> shader1;
     };
 }

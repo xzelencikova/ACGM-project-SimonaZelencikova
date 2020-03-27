@@ -3,11 +3,9 @@
 #include <vector>
 #include <HIRO_DRAW/renderers/RasterRenderer.h>
 
-// #TODO: To begin with, the scene will contain one camera and a vector of models
 #include <ACGM_RayTracer_lib/Camera.h>
 #include <ACGM_RayTracer_lib/Model.h>
-#include <ACGM_RayTracer_lib/Ray.h>
-#include <ACGM_RayTracer_lib/SunLight.h>
+#include <ACGM_RayTracer_lib/Light.h>
 
 
 namespace acgm
@@ -17,18 +15,16 @@ namespace acgm
   {
   public:
     // #TODO Initialize a Scene object
-    Scene();
+    Scene(const std::shared_ptr<acgm::Camera>& camera, const std::shared_ptr<acgm::Light>& light, const std::vector<std::shared_ptr<acgm::Model>>& models);
     ~Scene() = default;
 
     //! RayTrace the scene
-    void Raytrace(hiro::draw::RasterRenderer &renderer, acgm::Model &bunny) const;
+    void Raytrace(hiro::draw::RasterRenderer &renderer) const;
 
   private:
-    // #TODO Add one camera and a vector of models
-      Camera *camera;
-      SunLight* light;
+      std::shared_ptr<acgm::Camera> camera;
+      std::shared_ptr<acgm::Light> light;
 
-    // FYI: The models have to be smart pointers (such as std::shared_ptr<...>)
       std::vector<std::shared_ptr<acgm::Model>> models_;
   };
 }

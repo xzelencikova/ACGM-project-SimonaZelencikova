@@ -3,7 +3,7 @@
 
 namespace acgm
 {
-    //! Representation of a ray
+    //! Representation of a light
     class Light
     {
     public:

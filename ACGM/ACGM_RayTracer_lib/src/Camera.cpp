@@ -1,12 +1,9 @@
 #include <ACGM_RayTracer_lib/Camera.h>
-#include <glm\gtx\quaternion.hpp>
 
-
-
-acgm::Camera::Camera(
-  const glm::vec3 &position,
-  const glm::vec3 &target): position_(position), target_(target)
+acgm::Camera::Camera(const glm::vec3 &position, const glm::vec3 &up_direction, const glm::vec3 &forward_direction, const float z_near, const float z_far, const float fov_y_rad):
+    position_(position), up_direction(up_direction), forward_direction(forward_direction), fov_y_rad(fov_y_rad), z_near(z_near), z_far(z_far)
 {
+    right_direction = glm::cross(forward_direction, up_direction);
 }
 
 const glm::vec3 &acgm::Camera::GetPosition() const
@@ -14,29 +11,22 @@ const glm::vec3 &acgm::Camera::GetPosition() const
   return position_;
 }
 
-const glm::vec3& acgm::Camera::GetTarget() const
+glm::vec3 acgm::Camera::GetForwardDirection() const
 {
-    return target_;
+    return forward_direction;
 }
 
-glm::vec3 &acgm::Camera::GetU()
+glm::vec3 acgm::Camera::GetUpDirection() const
 {
-    return u;
+    return up_direction;
 }
 
-glm::vec3 &acgm::Camera::GetV()
+glm::vec3 acgm::Camera::GetRightDirection() const
 {
-    return v;
+    return right_direction;
 }
 
-glm::vec3 &acgm::Camera::GetW()
+float acgm::Camera::GetFovYRad() const
 {
-    return w;
-}
-
-void acgm::Camera::SetCameraVectors(glm::vec3 v)
-{
-    this->v = v;
-    this->u = target_ - position_;
-    this->w = glm::cross(u, v);
+    return fov_y_rad;
 }
