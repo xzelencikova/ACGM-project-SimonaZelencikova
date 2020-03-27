@@ -4,8 +4,10 @@
 
 acgm::Mesh::Mesh(std::string file_name, glm::mat4 transform, std::string name):file_name(file_name), transform(transform), Model(name)
 {
+    printf("%s\n", file_name);
 	mesh_obj.Import(file_name);
 	mesh_obj.points->Transform(transform);
+    printf("%d\n", mesh_obj.faces->GetFaceCount());
 }
 
 std::optional<acgm::HitResult> acgm::Mesh::Intersect(acgm::Ray & ray) const

@@ -31,7 +31,7 @@ float acgm::PointLight::GetQuadraticAttenuation()
 
 glm::vec3 acgm::PointLight::GetDirectionToLight(const glm::vec3& point) const
 {
-	return glm::vec3(point.x - position.x, point.y - position.y, point.z - position.z);
+	return glm::vec3( position.x - point.x, position.y - point.y, position.z - point.z);
 }
 
 float acgm::PointLight::GetIntensityAt(const glm::vec3& point) const
