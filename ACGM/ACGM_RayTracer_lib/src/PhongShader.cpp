@@ -42,7 +42,7 @@ cogs::Color3f acgm::PhongShader::CalculateColor(const ShaderInput& input) const
     // ! Calculate cosine angle and Phong Diffuse Shading
     float size_normal = pow(input.normal.x, 2) + pow(input.normal.y, 2) + pow(input.normal.z, 2);
     float size_light_direction = pow(input.direction_to_light.x, 2) + pow(input.direction_to_light.y, 2) + pow(input.direction_to_light.z, 2);
-    float cosine_angle = glm::acos(glm::dot(input.direction_to_light, input.normal) / (sqrt(size_light_direction) * sqrt(size_normal)));
+    float cosine_angle = glm::dot(input.direction_to_light, input.normal) / (sqrt(size_light_direction) * sqrt(size_normal));
     float diffuse_phong = diffuse * input.light_intensity * cosine_angle;
 
     // ! Calculate Blinn-Phong Specular Shading

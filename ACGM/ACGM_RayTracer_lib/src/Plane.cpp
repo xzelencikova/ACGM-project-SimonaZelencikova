@@ -17,9 +17,9 @@ glm::vec3 acgm::Plane::GetPlaneNormal()
 
 std::optional<acgm::HitResult> acgm::Plane::Intersect(acgm::Ray &ray) const
 {
-    float dot2 = glm::dot(plane_normal, ray.GetDirection());
+    float dot2 = glm::dot(ray.GetDirection(), plane_normal);
 
-    if (dot2 < ray.GetBias())
+    if (dot2 == 0)
     {
         return std::nullopt;
     }
@@ -29,7 +29,7 @@ std::optional<acgm::HitResult> acgm::Plane::Intersect(acgm::Ray &ray) const
     hit.normal = plane_normal;
     hit.point = ray.GetPoint(hit.ray_param);
 
-    printf("%f ", hit.ray_param);
+   // printf("%f ", hit.ray_param);
 
     return hit;
 }

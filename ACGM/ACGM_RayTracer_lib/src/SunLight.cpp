@@ -1,9 +1,8 @@
 #include "ACGM_RayTracer_lib/SunLight.h"
 
 
-acgm::SunLight::SunLight(float intensity, glm::vec3 direct):Light(intensity)
+acgm::SunLight::SunLight(const float intensity, const glm::vec3 direct):Light(intensity), direction(direct)
 {
-	this->direction = direct;
 }
 
 glm::vec3 acgm::SunLight::GetDirectionToLight(const glm::vec3& point) const

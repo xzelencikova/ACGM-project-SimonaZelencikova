@@ -9,7 +9,7 @@ namespace acgm
     class SunLight : public Light
     {
     public:
-        explicit SunLight(float intensity, glm::vec3 direct);
+        explicit SunLight(const float intensity, const glm::vec3 direct);
 
         virtual glm::vec3 GetDirectionToLight(const glm::vec3& point) const override;
         virtual float GetIntensityAt(const glm::vec3& point) const override;

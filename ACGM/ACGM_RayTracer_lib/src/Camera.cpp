@@ -6,7 +6,7 @@ acgm::Camera::Camera(const glm::vec3 &position, const glm::vec3 &up_direction, c
     right_direction = glm::cross(forward_direction, up_direction);
 }
 
-const glm::vec3 &acgm::Camera::GetPosition() const
+glm::vec3 acgm::Camera::GetPosition() const
 {
   return position_;
 }
@@ -29,4 +29,14 @@ glm::vec3 acgm::Camera::GetRightDirection() const
 float acgm::Camera::GetFovYRad() const
 {
     return fov_y_rad;
+}
+
+float acgm::Camera::GetZNear() const
+{
+    return z_near;
+}
+
+float acgm::Camera::GetZFar() const
+{
+    return z_far;
 }
