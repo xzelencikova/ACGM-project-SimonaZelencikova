@@ -13,7 +13,7 @@ float acgm::CheckerShader::GetCubeSize()
 cogs::Color3f acgm::CheckerShader::CalculateColor(const ShaderInput& input) const
 {
 	float bias = 0.001;
-	int choose_shader = floor(input.point.x / cube_size + bias) + floor(input.point.y / cube_size + bias) + floor(input.point.z / cube_size + bias);
+	int choose_shader = floor((input.point.x / cube_size) + bias) + floor((input.point.y / cube_size) + bias) + floor((input.point.z / cube_size) + bias);
 	
 	if (choose_shader % 2 == 0)
 		return shader0->CalculateColor(input);

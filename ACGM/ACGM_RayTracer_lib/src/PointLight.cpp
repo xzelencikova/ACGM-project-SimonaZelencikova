@@ -42,5 +42,5 @@ float acgm::PointLight::GetIntensityAt(const glm::vec3& point) const
 	float l = range / (range + (distance * linear_attenuation));
 	float q = power_range / (power_range + (pow(distance, 2) * quadratic_attenuation));
 	
-	return l * q * Light::GetIntensityAt(point);
+	return Light::GetIntensityAt(point) * l * q;
 }

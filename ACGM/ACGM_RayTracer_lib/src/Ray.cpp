@@ -45,7 +45,7 @@ float acgm::Ray::Intersection(glm::vec3& positionX, glm::vec3& positionY, glm::v
     //printf("a: %f\n", a);
 
     if (a == 0)
-        return false;    // This ray is parallel to this triangle.
+        return -1;    // This ray is parallel to this triangle.
 
     f = 1.0 / a;
     s = origin - positionX;

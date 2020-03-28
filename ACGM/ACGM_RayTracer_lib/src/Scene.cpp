@@ -50,7 +50,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
             {
                 ray_hit = models_.at(i)->Intersect(ray);
 
-                if (ray_hit == std::nullopt) continue;
+            //    if (ray_hit == std::nullopt) continue;
              
                 if (ray_hit->ray_param > 0 && ray_hit->ray_param < min_ray->ray_param && ray_hit->ray_param < camera->GetZFar() && ray_hit->ray_param > camera->GetZNear())
                 {
@@ -61,10 +61,10 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 }
             }
          
-            input.direction_to_light = glm::normalize(light->GetDirectionToLight(min_ray->point));
-            input.normal = min_ray->normal;
+            input.direction_to_light =  glm::normalize(light->GetDirectionToLight(min_ray->point));
+            input.normal = glm::normalize(min_ray->normal);
             input.point = min_ray->point;
-            input.direction_to_eye = camera->GetPosition() - min_ray->point;
+            input.direction_to_eye = glm::normalize(camera->GetPosition() - min_ray->point);
             input.light_intensity = light->GetIntensityAt(min_ray->point);
             shadow_ray = std::make_shared<acgm::Ray>(input.point, input.direction_to_light, bias);
 
@@ -76,7 +76,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 // ! Cast Shadow Ray
                 shadow_ray_hit = models_.at(i)->Intersect(shadow_ray);
 
-                if (shadow_ray_hit == std::nullopt) continue;
+                //if (shadow_ray_hit == std::nullopt) continue;
                 
                 if (shadow_ray_hit->ray_param > 0 && shadow_ray_hit->ray_param < min)
                 {
@@ -84,7 +84,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 }
             }
             
-            if (min_ray->ray_param >= min)
+            if (min_ray->ray_param > min)
             {
              //   printf("shadow: %d %d\n", row, column);
                 input.is_point_in_shadow = true;

@@ -32,7 +32,7 @@ glm::vec3 acgm::SpotLight::GetDirectionToLight(const glm::vec3& point) const
 float acgm::SpotLight::GetIntensityAt(const glm::vec3& point) const
 {
 	float point_intensity = acgm::PointLight::GetIntensityAt(point);
-	glm::vec3 light_direction = -GetDirectionToLight(point);
+	glm::vec3 light_direction = GetDirectionToLight(point);
 
 	float size_spot_direction = pow(spot_direction.x, 2) + pow(spot_direction.y, 2) + pow(spot_direction.z, 2);
 	float size_light_direction = pow(light_direction.x, 2) + pow(light_direction.y, 2) + pow(light_direction.z, 2);
