@@ -13,13 +13,16 @@ std::optional<acgm::HitResult> acgm::Triangle::Intersect(acgm::Ray & ray) const
     edge1 = vertexY - vertexX;
     edge2 = vertexZ - vertexX;
     
+   // printf("edge1 %f %f %f\n", edge1.x, edge1.y, edge1.z);
+    //printf("edge2 %f %f %f\n", edge2.x, edge2.y, edge2.z);
+
     h = glm::cross(ray.GetDirection(), edge2);
     a = glm::dot(edge1, h);
 
     if (a == 0)
         return std::nullopt;    // This ray is parallel to this triangle.
 
-    f = 1.0 / a;
+    f = 1.0f / a;
     s = ray.GetOrigin() - vertexX;
     u = f * glm::dot(s, h);
     

@@ -29,7 +29,5 @@ std::optional<acgm::HitResult> acgm::Plane::Intersect(acgm::Ray &ray) const
     hit.normal = plane_normal;
     hit.point = ray.GetPoint(hit.ray_param);
 
-   // printf("%f ", hit.ray_param);
-
     return hit;
 }

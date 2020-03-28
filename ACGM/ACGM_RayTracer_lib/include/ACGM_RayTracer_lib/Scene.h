@@ -21,6 +21,7 @@ namespace acgm
 
     //! RayTrace the scene
     void Raytrace(hiro::draw::RasterRenderer &renderer) const;
+    std::optional<acgm::HitResult> acgm::Scene::SearchModel(acgm::Ray& ray, std::shared_ptr<acgm::Camera> camera, int& index) const;
 
   private:
       std::shared_ptr<acgm::Camera> camera;
