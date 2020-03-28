@@ -1,6 +1,9 @@
 #pragma once
+#include <Utils/Dialogs.h>
+
 #include <glm/glm.hpp>
-#include <ACGM_RayTracer_lib/Model.h>
+#include <ACGM_RayTracer_lib/Ray.h>
+
 
 namespace acgm
 {
@@ -11,7 +14,7 @@ namespace acgm
         explicit Triangle(const glm::vec3 vertexX, const glm::vec3 vertexY, const glm::vec3 vertexZ);
         virtual ~Triangle() = default;
 
-        std::optional<acgm::HitResult> Intersect(acgm::Ray &ray) const;
+        //std::optional<acgm::HitResult> Intersect(acgm::Ray &ray) const;
 
     private:
         glm::vec3 vertexX;

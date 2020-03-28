@@ -23,7 +23,7 @@ namespace acgm
     void SetShader(const std::shared_ptr<acgm::Shader> shader);
     
     std::shared_ptr<acgm::Shader> GetShader() const;
-    virtual std::optional<acgm::HitResult> Intersect(acgm::Ray & ray) const;
+    virtual std::optional<acgm::HitResult> Intersect(std::shared_ptr<acgm::Ray>& ray) const;
 
   private:
     std::string name;

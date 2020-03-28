@@ -48,7 +48,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
             //! Search for nearest intersect ray x model and shadow ray x model
             for (i = 0; i < models_.size(); i++)
             {
-                ray_hit = models_.at(i)->Intersect(*ray);
+                ray_hit = models_.at(i)->Intersect(ray);
 
                 if (ray_hit == std::nullopt) continue;
              
@@ -61,20 +61,20 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 }
             }
          
-            input.direction_to_light = light->GetDirectionToLight(min_ray->point);
+            input.direction_to_light = glm::normalize(light->GetDirectionToLight(min_ray->point));
             input.normal = min_ray->normal;
             input.point = min_ray->point;
             input.direction_to_eye = camera->GetPosition() - min_ray->point;
             input.light_intensity = light->GetIntensityAt(min_ray->point);
             shadow_ray = std::make_shared<acgm::Ray>(input.point, input.direction_to_light, bias);
-            input.is_point_in_shadow = false;
+
             min = 10000.0f;
 
          //   min_s_ray = SearchModel(*ray, camera, index);
-   /*         for (i = 0; i < models_.size(); i++)
+            for (i = 0; i < models_.size(); i++)
             {
                 // ! Cast Shadow Ray
-                shadow_ray_hit = models_.at(i)->Intersect(*shadow_ray);
+                shadow_ray_hit = models_.at(i)->Intersect(shadow_ray);
 
                 if (shadow_ray_hit == std::nullopt) continue;
                 
@@ -90,7 +90,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 input.is_point_in_shadow = true;
             }
             else input.is_point_in_shadow = false;
-            */
+
             renderer.SetPixel(column, renderer.GetResolution().y - row - 1, models_.at(index)->GetShader()->CalculateColor(input));
 
             x += dx;

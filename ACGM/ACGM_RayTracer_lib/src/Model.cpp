@@ -20,7 +20,7 @@ std::shared_ptr<acgm::Shader> acgm::Model::GetShader() const
     return shader;
 }
 
-std::optional<acgm::HitResult> acgm::Model::Intersect(acgm::Ray& ray) const
+std::optional<acgm::HitResult> acgm::Model::Intersect(std::shared_ptr<acgm::Ray>& ray) const
 {
     acgm::HitResult result;
     return result;

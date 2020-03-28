@@ -15,9 +15,9 @@ glm::vec3 acgm::Plane::GetPlaneNormal()
 	return plane_normal; 
 }
 
-std::optional<acgm::HitResult> acgm::Plane::Intersect(acgm::Ray &ray) const
+std::optional<acgm::HitResult> acgm::Plane::Intersect(std::shared_ptr<acgm::Ray>& ray) const
 {
-    float dot2 = glm::dot(ray.GetDirection(), plane_normal);
+    float dot2 = glm::dot(ray->GetDirection(), plane_normal);
 
     if (dot2 == 0)
     {
@@ -25,9 +25,9 @@ std::optional<acgm::HitResult> acgm::Plane::Intersect(acgm::Ray &ray) const
     }
     HitResult hit;
 //    ! Set hit params of plane and ray intersection
-    hit.ray_param = glm::dot((plane_point - ray.GetOrigin()), plane_normal) / dot2;
+    hit.ray_param = glm::dot((plane_point - ray->GetOrigin()), plane_normal) / dot2;
     hit.normal = plane_normal;
-    hit.point = ray.GetPoint(hit.ray_param);
+    hit.point = ray->GetPoint(hit.ray_param);
 
     return hit;
 }

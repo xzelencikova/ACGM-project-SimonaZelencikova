@@ -9,12 +9,12 @@ acgm::Sphere::Sphere(const glm::vec3 &position, float radius, std::string name)
 {
 }
 
-std::optional<acgm::HitResult> acgm::Sphere::Intersect(acgm::Ray & ray) const
+std::optional<acgm::HitResult> acgm::Sphere::Intersect(std::shared_ptr<acgm::Ray>& ray) const
 {
-  glm::vec3 oo = ray.GetOrigin() - position_;
+  glm::vec3 oo = ray->GetOrigin() - position_;
 
-  float A = glm::dot(ray.GetDirection(), ray.GetDirection());
-  float B = -2.0f * glm::dot(oo, ray.GetDirection());
+  float A = glm::dot(ray->GetDirection(), ray->GetDirection());
+  float B = -2.0f * glm::dot(oo, ray->GetDirection());
   float C = glm::dot(oo, oo) - radius_ * radius_;
   float D = B * B - 4.0f * A * C;
 
@@ -26,13 +26,13 @@ std::optional<acgm::HitResult> acgm::Sphere::Intersect(acgm::Ray & ray) const
   float sD = glm::sqrt(D);
 
   float t1 = 0.5 * (B + sD) / A;
-  if (t1 < ray.GetBias())
+  if (t1 < ray->GetBias())
   {
     t1 = INFINITY;
   }
 
   float t2 = 0.5 * (B - sD) / A;
-  if (t2 < ray.GetBias())
+  if (t2 < ray->GetBias())
   {
     t2 = INFINITY;
   }
@@ -46,8 +46,8 @@ std::optional<acgm::HitResult> acgm::Sphere::Intersect(acgm::Ray & ray) const
   HitResult hit;
   //! Set hit params of sphere and ray intersection
   hit.ray_param = t;
-  hit.normal = glm::normalize(ray.GetPoint(t) - position_);
-  hit.point = ray.GetPoint(hit.ray_param);
+  hit.normal = glm::normalize(ray->GetPoint(t) - position_);
+  hit.point = ray->GetPoint(hit.ray_param);
   
   return hit;
 }

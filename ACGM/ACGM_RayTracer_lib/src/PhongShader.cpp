@@ -50,6 +50,5 @@ cogs::Color3f acgm::PhongShader::CalculateColor(const ShaderInput& input) const
     }
 //    else ambient_phong = Shader::CalculateColor(input) * (ambient + ((1 - ambient) * input.light_intensity));
 
-
     return diffuse_phong + specular_phong; //ambient_phong; + diffuse_phong + specular_phong;
 }
