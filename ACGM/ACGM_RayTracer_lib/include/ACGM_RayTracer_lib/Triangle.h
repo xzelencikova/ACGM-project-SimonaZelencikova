@@ -14,7 +14,7 @@ namespace acgm
         explicit Triangle(const glm::vec3 vertexX, const glm::vec3 vertexY, const glm::vec3 vertexZ);
         virtual ~Triangle() = default;
 
-        //std::optional<acgm::HitResult> Intersect(acgm::Ray &ray) const;
+        float Intersect(std::shared_ptr<acgm::Ray> ray) const;
 
     private:
         glm::vec3 vertexX;

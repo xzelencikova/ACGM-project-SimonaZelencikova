@@ -1,4 +1,5 @@
 #include <ACGM_RayTracer_lib/Mesh.h>
+#include <ACGM_RayTracer_lib/Triangle.h>
 
 //#include <ACGM_RayTracer_lib/Triangle.h>
 
@@ -15,17 +16,20 @@ std::optional<acgm::HitResult> acgm::Mesh::Intersect(std::shared_ptr<acgm::Ray>&
     std::optional<HitResult> min_hit;
     min_hit->ray_param = 10000.0f;
     std::optional<HitResult> hit;
+    int j;
 
-    for (int j = 0; j < mesh_obj.faces->GetFaceCount(); j++)
+ #pragma omp parallel for private(j)//min, input, ray, shadow_ray, ray_hit, shadow_ray_hit, direction)
+    for (j = 0; j < mesh_obj.faces->GetFaceCount(); j++)
     {
         // Nastavím si indexy vrcholov
         glm::uint vertX = mesh_obj.faces->GetFaces()[j].x;
         glm::uint vertY = mesh_obj.faces->GetFaces()[j].y;
         glm::uint vertZ = mesh_obj.faces->GetFaces()[j].z;
         // vytvorím trojuholník s tromi vrcholmi
-        //Triangle triangle = Triangle(mesh_obj.points->GetPositions()[vertX], mesh_obj.points->GetPositions()[vertY], mesh_obj.points->GetPositions()[vertZ]);
+        Triangle triangle = Triangle(mesh_obj.points->GetPositions()[vertX], mesh_obj.points->GetPositions()[vertY], mesh_obj.points->GetPositions()[vertZ]);
         // zavolám intersect pre každý trojuholník
-        float t = ray->Intersection(mesh_obj.points->GetPositions()[vertX], mesh_obj.points->GetPositions()[vertY], mesh_obj.points->GetPositions()[vertZ]);
+        //float t = ray->Intersection(mesh_obj.points->GetPositions()[vertX], mesh_obj.points->GetPositions()[vertY], mesh_obj.points->GetPositions()[vertZ]);
+        float t = triangle.Intersect(ray);
 
         //if (hit == std::nullopt) continue;
 

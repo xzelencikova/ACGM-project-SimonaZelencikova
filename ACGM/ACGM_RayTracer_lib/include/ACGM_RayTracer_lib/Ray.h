@@ -14,7 +14,6 @@ namespace acgm
       glm::vec3 GetDirection();
       glm::vec3 GetPoint(const float t);
       float GetBias();
-      float acgm::Ray::Intersection(glm::vec3& positionX, glm::vec3& positionY, glm::vec3& positionZ);
 
   private:
       glm::vec3 origin;
