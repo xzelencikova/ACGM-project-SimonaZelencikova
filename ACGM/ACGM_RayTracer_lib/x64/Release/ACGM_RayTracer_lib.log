@@ -1,2 +1,7 @@
-﻿  Triangle.cpp
+﻿  Mesh.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Mesh.cpp(19,23): warning C4018: '<': signed/unsigned mismatch
+  Scene.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(31,23): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(38,23): warning C4018: '<': signed/unsigned mismatch
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(40,33): warning C4018: '<': signed/unsigned mismatch
   ACGM_RayTracer_lib.vcxproj -> D:\Plocha\FIIT\Ing\ACGMProj\x64\Release\ACGM_RayTracer_lib.lib

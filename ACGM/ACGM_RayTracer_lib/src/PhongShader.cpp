@@ -36,7 +36,7 @@ cogs::Color3f acgm::PhongShader::CalculateColor(const ShaderInput& input) const
     //// ! Calculate cosine angle and Phong Diffuse Shading
     float size_normal = sqrt(pow(input.normal.x, 2) + pow(input.normal.y, 2) + pow(input.normal.z, 2));
     float size_light_direction = sqrt(pow(input.direction_to_light.x, 2) + pow(input.direction_to_light.y, 2) + pow(input.direction_to_light.z, 2));
-    float cosine_angle = glm::dot(input.normal, input.direction_to_light) / (size_light_direction * size_normal);
+    float cosine_angle = glm::dot(input.normal, input.direction_to_light);// / (size_light_direction * size_normal);
 
     cogs::Color3f diffuse_phong = Shader::CalculateColor(input) * diffuse * input.light_intensity * cosine_angle;
 

@@ -13,7 +13,8 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
     int column;
     int i;
 
-    float y = tan( camera->GetFovYRad() / 2.0f);
+    float y;
+    y = tan(camera->GetFovYRad() / 2.0f);
     float x = -y;
     
     float dy = 2 * tan(camera->GetFovYRad() / 2.0f) / float(renderer.GetResolution().y);
@@ -31,12 +32,9 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
     ShaderInput input;
 
     float min;
-    printf("Pred cyklom Scene");
-    printf(" Models count: %d\n", models_.size());
-    printf("Camera: %f %f %f", camera->GetPosition().x, camera->GetPosition().y, camera->GetPosition().z);
   
     //! using OMP to parallelize rendering, default 4 threads for now
-//#pragma omp parallel for private( row, column, input)//min, input, ray, shadow_ray, ray_hit, shadow_ray_hit, direction)
+//#pragma omp parallel for private(row, column, i)//min, input, ray, shadow_ray, ray_hit, shadow_ray_hit, direction)
     for (row = 0; row < renderer.GetResolution().y; row++)
     {
         for (column = 0; column < renderer.GetResolution().x; column++)
@@ -68,12 +66,12 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
             input.point = min_ray->point;
             input.direction_to_eye = camera->GetPosition() - min_ray->point;
             input.light_intensity = light->GetIntensityAt(min_ray->point);
-            shadow_ray = std::make_shared<acgm::Ray>(input.point, glm::normalize(input.direction_to_light), bias);
-
+            shadow_ray = std::make_shared<acgm::Ray>(input.point, input.direction_to_light, bias);
+            input.is_point_in_shadow = false;
             min = 10000.0f;
 
          //   min_s_ray = SearchModel(*ray, camera, index);
-            for (i = 0; i < models_.size(); i++)
+   /*         for (i = 0; i < models_.size(); i++)
             {
                 // ! Cast Shadow Ray
                 shadow_ray_hit = models_.at(i)->Intersect(*shadow_ray);
@@ -92,7 +90,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 input.is_point_in_shadow = true;
             }
             else input.is_point_in_shadow = false;
-
+            */
             renderer.SetPixel(column, renderer.GetResolution().y - row - 1, models_.at(index)->GetShader()->CalculateColor(input));
 
             x += dx;

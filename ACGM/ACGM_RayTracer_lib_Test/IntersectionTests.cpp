@@ -1,7 +1,7 @@
 #include "pch.h"
+#include <glm/gtc/epsilon.hpp>
 
 #include <ACGM_RayTracer_lib/Ray.h>
-#include <ACGM_RayTracer_lib/Model.h>
 #include <ACGM_RayTracer_lib/Plane.h>
 #include <ACGM_RayTracer_lib/Sphere.h>
 #include <ACGM_RayTracer_lib/Mesh.h>
@@ -15,9 +15,9 @@ TEST(IntersectionTests, RayPlaneIntersectionTest)
 
     std::optional<acgm::HitResult> hit;
 
-    EXPECT_TRUE(glm::EpsilonEqual<float>(
+    EXPECT_TRUE(glm::epsilonEqual<float>(
         hit->ray_param,
-        plane_back->Intersect(ray)->ray_param,
+        plane_back->Intersect(*ray)->ray_param,
         glm::epsilon<float>();
         ));
   //EXPECT_EQ(1, 1);
@@ -31,9 +31,9 @@ TEST(IntersectionTests, RaySphereIntersectionTest)
 
     std::optional<acgm::HitResult> hit;
 
-    EXPECT_TRUE(glm::EpsilonEqual<float>(
+    EXPECT_TRUE(glm::epsilonEqual<float>(
         hit->ray_param,
-        plane_back->Intersect(ray)->ray_param,
+        sphere->Intersect(*ray)->ray_param,
         glm::epsilon<float>();
     ));
     //EXPECT_EQ(1, 1);
@@ -47,7 +47,7 @@ TEST(IntersectionTests, RayMeshIntersectionTest)
 
     std::optional<acgm::HitResult> hit;
 
-    EXPECT_TRUE(glm::EpsilonEqual<float>(
+    EXPECT_TRUE(glm::epsilonEqual<float>(
         hit->ray_param,
         plane_back->Intersect(ray)->ray_param,
         glm::epsilon<float>();

@@ -37,9 +37,10 @@ glm::vec3 acgm::PointLight::GetDirectionToLight(const glm::vec3& point) const
 float acgm::PointLight::GetIntensityAt(const glm::vec3& point) const
 {
 	float distance = glm::distance(position, point);
-	float power_range = pow(range, 2);
-	float l = range / (range + distance * linear_attenuation);
-	float q = power_range / (power_range + pow(distance, 2) * quadratic_attenuation);
 	
-	return l * q * GetIntensity();
+	float power_range = pow(range, 2);
+	float l = range / (range + (distance * linear_attenuation));
+	float q = power_range / (power_range + (pow(distance, 2) * quadratic_attenuation));
+	
+	return l * q * Light::GetIntensityAt(point);
 }
