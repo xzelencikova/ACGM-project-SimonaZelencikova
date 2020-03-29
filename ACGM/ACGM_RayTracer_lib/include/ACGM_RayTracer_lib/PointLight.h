@@ -5,23 +5,18 @@
 
 namespace acgm
 {
-    //! Representation of a point light
+    //! Representation of point light
     class PointLight: public Light
     {
     public:
-        explicit PointLight(float intensity, glm::vec3 position, float range, float linear_atten, float quadratic_atten);
-
-        glm::vec3 GetPosition();
-        float GetRange();
-        float GetLinearAttenuation();
-        float GetQuadraticAttenuation();
+        explicit PointLight(const float intensity, const glm::vec3 position, const float range, const float linear_attenuation, const float quadratic_attenuation);
 
         virtual glm::vec3 GetDirectionToLight(const glm::vec3& point) const override;
         virtual float GetIntensityAt(const glm::vec3& point) const override;
 
     private:
-        float range;
-        float linear_attenuation;
-        float quadratic_attenuation;
+        const float range_;
+        const float linear_attenuation_;
+        const float quadratic_attenuation_;
     };
 }

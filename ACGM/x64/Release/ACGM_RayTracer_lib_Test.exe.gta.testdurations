@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Executable>D:\Plocha\FIIT\Ing\ACGMProj\x64\Release\ACGM_RayTracer_lib_Test.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="LightsTests.SunLightIntensityTest" Duration="1" />
+    <TestDuration Test="LightsTests.PointLightIntensityTest" Duration="1" />
+    <TestDuration Test="LightsTests.SpotLightIntensityTest" Duration="1" />
+  </TestDurations>
+</GtaTestDurations>

@@ -3,7 +3,7 @@
 #include <HIRO/Resource.h>
 #include <HIRO_DRAW/renderers/RasterRenderer.h>
 
-#include <ACGM_RayTracer_lib/Scene.h>
+//#include <ACGM_RayTracer_lib/Scene.h>
 
 
 

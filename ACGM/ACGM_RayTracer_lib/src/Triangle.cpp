@@ -1,61 +1,56 @@
 #include<ACGM_RayTracer_lib/Triangle.h>
 
-acgm::Triangle::Triangle(const glm::vec3 vertexX, const glm::vec3 vertexY, const glm::vec3 vertexZ):
-	vertexX(vertexX), vertexY(vertexY), vertexZ(vertexZ)
+//! Triangle constructor
+acgm::Triangle::Triangle(const glm::vec3 vertex_x, const glm::vec3 vertex_y, const glm::vec3 vertex_z):
+	vertex_x_(vertex_x), vertex_y_(vertex_y), vertex_z_(vertex_z)
 {
 }
 
+//! Getters  for triangle vertexes
+glm::vec3 acgm::Triangle::GetVertexX() const
+{
+    return vertex_x_;
+}
+
+glm::vec3 acgm::Triangle::GetVertexY() const
+{
+    return vertex_y_;
+}
+
+glm::vec3 acgm::Triangle::GetVertexZ() const
+{
+    return vertex_z_;
+}
+
+//! Intersection between triangle and ray, @ https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
 float acgm::Triangle::Intersect(std::shared_ptr<acgm::Ray> ray) const
 {
     glm::vec3 edge1, edge2, h, s, q;
     float a, f, u, v;
 
-    edge1 = vertexY - vertexX;
-    edge2 = vertexZ - vertexX;
-
-    //printf("Edge1: %f %f %f\n", edge1.x, edge1.y, edge1.z);
-    //printf("Edge2: %f %f %f\n", edge2.x, edge2.y, edge2.z);
+    edge1 = vertex_y_ - vertex_x_;
+    edge2 = vertex_z_ - vertex_x_;
 
     h = glm::cross(ray->GetDirection(), edge2);
     a = glm::dot(edge1, h);
 
-    //printf("h: %f %f %f\n", h.x, h.y, h.z);
-    //printf("a: %f\n", a);
-
+    //! Ray is parallel to this triangle
     if (a == 0)
-        return -1;    // This ray is parallel to this triangle.
+        return -1;
 
     f = 1.0 / a;
-    s = ray->GetOrigin() - vertexX;
+    s = ray->GetOrigin() - vertex_x_;
     u = f * glm::dot(s, h);
-
-    //printf("f: %f\n", f);
-    //printf("s: %f %f %f\n", s.x, s.y, s.z);
-    //printf("u: %f\n", u);
 
     if (u <= 0.0 || u > 1.0)
         return -1;
+    
     q = glm::cross(s, edge1);
     v = f * glm::dot(ray->GetDirection(), q);
 
     if (v <= 0.0f || (u + v) > 1.0f)
         return -1;
-    // At this stage we can compute t to find out where the intersection point is on the line.
-    float t = f * glm::dot(edge2, q);
 
-    //printf("Edge1: %f %f %f\n", edge1.x, edge1.y, edge1.z);
-    //printf("Edge2: %f %f %f\n", edge2.x, edge2.y, edge2.z);
-
-    //printf("h: %f %f %f\n", h.x, h.y, h.z);
-    //printf("a: %f\n", a);
-
-    //printf("f: %f\n", f);
-    //printf("s: %f %f %f\n", s.x, s.y, s.z);
-    //printf("u: %f\n", u);
-
-    //printf("q: %f %f %f\n", q.x, q.y, q.z);
-    //printf("v: %f\n", v);
-    //printf("t: %f\n", t);
-
-    return t;
+    //! Return intersection
+    return f * glm::dot(edge2, q);
 }

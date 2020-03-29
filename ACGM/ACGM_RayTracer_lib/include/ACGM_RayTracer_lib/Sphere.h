@@ -14,6 +14,7 @@ namespace acgm
     virtual std::optional<HitResult> Intersect(std::shared_ptr<acgm::Ray>& ray) const override;
     const glm::vec3 &GetPosition() const;
     float GetRadius() const;
+
   private:
     glm::vec3 position_;
     float radius_;

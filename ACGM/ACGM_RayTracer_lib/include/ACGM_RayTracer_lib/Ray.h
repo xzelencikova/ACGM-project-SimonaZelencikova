@@ -10,14 +10,16 @@ namespace acgm
   public:
       explicit Ray(glm::vec3 orig, glm::vec3 direct, const float bias);
 
-      glm::vec3 GetOrigin();
-      glm::vec3 GetDirection();
-      glm::vec3 GetPoint(const float t);
-      float GetBias();
+      //! Getters for ray attributes
+      glm::vec3 GetOrigin() const;
+      glm::vec3 GetDirection() const;
+      float GetBias() const;
+
+      glm::vec3 GetPoint(const float t) const;
 
   private:
-      glm::vec3 origin;
-      glm::vec3 direction;
-      const float bias;
+      const glm::vec3 origin_;
+      const glm::vec3 direction_;
+      const float bias_;
   };
 }

@@ -23,6 +23,7 @@ void RayTracerGadget::GenerateGui(hiro::GuiGenerator& gui)
     hiro::Gadget::GenerateGui(gui);
     hiro::gui::Droplist* model_selector_;
     hiro::gui::Button* model_button_;
+    
     model_selector_ = gui.AddDroplist("Scene File")
         ->AddItemsIndexed({ "scene0.txt", "scene1.txt", "scene2.txt" })
         ->Set(0);
@@ -30,23 +31,27 @@ void RayTracerGadget::GenerateGui(hiro::GuiGenerator& gui)
     model_button_ = gui.AddButton("Import and Render");
     model_button_->Subscribe([model_selector_](const hiro::gui::Button* button) {
         std::string file_name = model_selector_->GetText();
-        ImportAndRender(file_name);
+        ImportAndRenderScene(file_name);
     });
 }
 
-void RayTracerGadget::ImportAndRender(std::string fileName)
+void RayTracerGadget::ImportAndRenderScene(std::string fileName)
 {
     bool importCheck;
-    acgm::SceneImporter SceneImporter;
-    acgm::RenderOptions result;
+    acgm::SceneImporter scene_importer;
+    acgm::RenderOptions render_opt;
     std::shared_ptr<acgm::Scene> scene;
-    importCheck = SceneImporter.Import(fileName);
-    result = SceneImporter.GetRenderOptions();
-    scene = SceneImporter.GetScene();
+    
+    importCheck = scene_importer.Import(fileName);
+    render_opt = scene_importer.GetRenderOptions();
+    scene = scene_importer.GetScene();
 
+    //! Set resolution
     auto resource = std::make_shared<RayTracerResource>("RayTraced Scene");
-    //auto resource = std::make_shared<RayTracerResource>("RayTraced Scene", result);
+    resource->GetRenderer()->SetResolution({ render_opt.resolution.x, render_opt.resolution.y });
+   
     hiro::AddResource(resource);
+   
 
     scene->Raytrace(*resource->GetRenderer());
 };

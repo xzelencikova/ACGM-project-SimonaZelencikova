@@ -1,28 +1,29 @@
 #include <ACGM_RayTracer_lib/Ray.h>
 
 
-// #TODO Implement your functionality here
-acgm::Ray::Ray(glm::vec3 orig, glm::vec3 direct, const float bias):
-    origin(orig), direction(direct), bias(bias)
+//! Ray constructor
+acgm::Ray::Ray(glm::vec3 origin, glm::vec3 direction, const float bias):
+    origin_(origin), direction_(direction), bias_(bias)
 {
 }
 
-glm::vec3 acgm::Ray::GetOrigin() 
+glm::vec3 acgm::Ray::GetOrigin() const
 { 
-	return origin; 
+	return origin_; 
 }
 
-glm::vec3 acgm::Ray::GetDirection() 
+glm::vec3 acgm::Ray::GetDirection() const 
 { 
-	return direction; 
+	return direction_; 
 }
 
-glm::vec3 acgm::Ray::GetPoint(const float t)
+float acgm::Ray::GetBias() const
 {
-    return origin + (t * direction);
+    return bias_;
 }
 
-float acgm::Ray::GetBias()
+//! Compute intersection point between ray and model
+glm::vec3 acgm::Ray::GetPoint(const float t) const
 {
-    return bias;
+    return origin_ + (t * direction_);
 }

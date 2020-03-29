@@ -1,33 +1,27 @@
 #include <ACGM_RayTracer_lib/Plane.h>
 
-
-acgm::Plane::Plane(glm::vec3 plane_pt, glm::vec3 plane_norm, std::string name) : Model(name), plane_point(plane_pt), plane_normal(plane_norm)
+//! Plane constructor
+acgm::Plane::Plane(glm::vec3 point, glm::vec3 normal, std::string name) : 
+    Model(name), point_(point), normal_(normal)
 {
 }
 
-glm::vec3 acgm::Plane::GetPlanePoint() 
-{ 
-	return plane_point; 
-}
-
-glm::vec3 acgm::Plane::GetPlaneNormal() 
-{ 
-	return plane_normal; 
-}
-
+//! Calculate intersection params between ray and plane
 std::optional<acgm::HitResult> acgm::Plane::Intersect(std::shared_ptr<acgm::Ray>& ray) const
 {
-    float dot2 = glm::dot(ray->GetDirection(), plane_normal);
-
+    float dot2 = glm::dot(ray->GetDirection(), normal_);
+    //! Denominator can't be 0
     if (dot2 == 0)
     {
         return std::nullopt;
     }
+
+    //! Set hit params of plane and ray intersection
     HitResult hit;
-//    ! Set hit params of plane and ray intersection
-    hit.ray_param = glm::dot((plane_point - ray->GetOrigin()), plane_normal) / dot2;
-    hit.normal = plane_normal;
-    hit.point = ray->GetPoint(hit.ray_param) + (hit.normal * ray->GetBias());;
+
+    hit.ray_param = glm::dot((point_ - ray->GetOrigin()), normal_) / dot2;
+    hit.normal = normal_;
+    hit.point = ray->GetPoint(hit.ray_param) + (normal_ * ray->GetBias());;
 
     return hit;
 }

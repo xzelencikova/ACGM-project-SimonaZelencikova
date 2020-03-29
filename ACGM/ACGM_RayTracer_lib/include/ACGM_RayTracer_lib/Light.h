@@ -3,20 +3,20 @@
 
 namespace acgm
 {
-    //! Representation of a light
+    //! Representation of light
     class Light
     {
     public:
-        explicit Light(float intensity, const glm::vec3 &position);
+        explicit Light(const float intensity, const glm::vec3 position);
         virtual ~Light() = default;
 
-        float GetIntensity() const;
         glm::vec3 GetPosition() const;
+        
         virtual glm::vec3 GetDirectionToLight(const glm::vec3& point) const;
         virtual float GetIntensityAt(const glm::vec3& point) const;
 
     private:
-        float intensity;
-        glm::vec3 position;
+        const float intensity_;
+        const glm::vec3 position_;
     };
 }

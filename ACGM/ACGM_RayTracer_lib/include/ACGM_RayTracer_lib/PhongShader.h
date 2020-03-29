@@ -10,20 +10,14 @@ namespace acgm
     class PhongShader:public Shader
     {
     public:
-        explicit PhongShader(cogs::Color3f color, float shininess, 
-            float ambient, float diffuse, float specular);
-
-        float GetShininess();
-        float GetAmbient();
-        float GetDiffuse();
-        float GetSpecular();
+        explicit PhongShader(const cogs::Color3f color, const float shininess, const float ambient, const float diffuse, const float specular);
 
         virtual cogs::Color3f CalculateColor(const ShaderInput& input) const override;
 
     private:
-        float shininess;
-        float ambient;
-        float diffuse;
-        float specular;
+        float shininess_;
+        float ambient_;
+        float diffuse_;
+        float specular_;
     };
 }

@@ -1,47 +1,38 @@
 #include <ACGM_RayTracer_lib/Mesh.h>
-#include <ACGM_RayTracer_lib/Triangle.h>
 
-//#include <ACGM_RayTracer_lib/Triangle.h>
-
-acgm::Mesh::Mesh(std::string file_name, glm::mat4 transform, std::string name):file_name(file_name), transform(transform), Model(name)
+//! Mesh constructor
+acgm::Mesh::Mesh(const std::string file_name, const glm::mat4 transform, const std::string name):
+    file_name_(file_name), transform_(transform), Model(name)
 {
-    // mesh import a transform.. mesh_obj je typu Cogs::Mesh
-	mesh_obj.Import(file_name);
-	mesh_obj.points->Transform(transform);
-    printf("%d\n", mesh_obj.faces->GetFaceCount());
+    //! Mesh import and transformation
+	mesh_.Import(file_name_);
+	mesh_.points->Transform(transform_);
 }
 
+//! Calculate intersection between mesh and ray
 std::optional<acgm::HitResult> acgm::Mesh::Intersect(std::shared_ptr<acgm::Ray>& ray) const
 {
     std::optional<HitResult> min_hit;
     min_hit->ray_param = 10000.0f;
-    std::optional<HitResult> hit;
-    int j;
+    int32_t j;
 
- #pragma omp parallel for private(j)//min, input, ray, shadow_ray, ray_hit, shadow_ray_hit, direction)
-    for (j = 0; j < mesh_obj.faces->GetFaceCount(); j++)
+    //! Find nearest intersection among all triangles
+ #pragma omp parallel for private(j)
+    for (j = 0; j < mesh_.faces->GetFaceCount(); j++)
     {
-        // Nastavím si indexy vrcholov
-        glm::uint vertX = mesh_obj.faces->GetFaces()[j].x;
-        glm::uint vertY = mesh_obj.faces->GetFaces()[j].y;
-        glm::uint vertZ = mesh_obj.faces->GetFaces()[j].z;
-        // vytvorím trojuholník s tromi vrcholmi
-        Triangle triangle = Triangle(mesh_obj.points->GetPositions()[vertX], mesh_obj.points->GetPositions()[vertY], mesh_obj.points->GetPositions()[vertZ]);
-        // zavolám intersect pre každý trojuholník
-        //float t = ray->Intersection(mesh_obj.points->GetPositions()[vertX], mesh_obj.points->GetPositions()[vertY], mesh_obj.points->GetPositions()[vertZ]);
-        float t = triangle.Intersect(ray);
+        //! Set indexes of the triangle vertexes and construct triangle
+        glm::uint vertX = mesh_.faces->GetFaces()[j].x;
+        glm::uint vertY = mesh_.faces->GetFaces()[j].y;
+        glm::uint vertZ = mesh_.faces->GetFaces()[j].z;
+        Triangle triangle = Triangle(mesh_.points->GetPositions()[vertX], mesh_.points->GetPositions()[vertY], mesh_.points->GetPositions()[vertZ]);
+        
+        //! Call intersection for each triangle
+        float hit = triangle.Intersect(ray);
 
-        //if (hit == std::nullopt) continue;
-
-        // h¾adám najmenší intersect
-        if (t > 0 && t < min_hit->ray_param)
+        if (hit > 0 && hit < min_hit->ray_param)
         {
-    //        printf("x %f %f %f\n", mesh_obj.points->GetPositions()[vertX].x, mesh_obj.points->GetPositions()[vertX].y, mesh_obj.points->GetPositions()[vertX].z);
-      //      printf("y %f %f %f\n", mesh_obj.points->GetPositions()[vertY].x, mesh_obj.points->GetPositions()[vertY].y, mesh_obj.points->GetPositions()[vertY].z);
-        //    printf("z %f %f %f\n", mesh_obj.points->GetPositions()[vertZ].x, mesh_obj.points->GetPositions()[vertZ].y, mesh_obj.points->GetPositions()[vertZ].z);
-          //  printf("t %f\n", hit->ray_param);
-            min_hit->ray_param = t;
-            min_hit->normal = glm::cross(mesh_obj.points->GetPositions()[vertY] - mesh_obj.points->GetPositions()[vertX], mesh_obj.points->GetPositions()[vertZ] - mesh_obj.points->GetPositions()[vertX]);;
+            min_hit->ray_param = hit;
+            min_hit->normal = glm::cross(triangle.GetVertexY() - triangle.GetVertexX(), triangle.GetVertexZ() - triangle.GetVertexX());
             min_hit->point = ray->GetPoint(min_hit->ray_param) + (min_hit->normal * ray->GetBias());
         }
     }

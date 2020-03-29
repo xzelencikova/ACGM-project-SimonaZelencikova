@@ -1,11 +1,32 @@
-﻿  CheckerShader.cpp
+﻿  Camera.cpp
+  CheckerShader.cpp
 D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\CheckerShader.cpp(15,20): warning C4305: 'initializing': truncation from 'double' to 'float'
 D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\CheckerShader.cpp(16,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Light.cpp
+  Mesh.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Mesh.cpp(22,19): warning C4018: '<': signed/unsigned mismatch
+  Model.cpp
+  PhongShader.cpp
+  Plane.cpp
+  PointLight.cpp
+  Ray.cpp
+  Scene.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(31,23): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(39,23): warning C4018: '<': signed/unsigned mismatch
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Scene.cpp(41,33): warning C4018: '<': signed/unsigned mismatch
   SceneImporter.cpp
 D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\SceneImporter.cpp(80,24): warning C4267: 'argument': conversion from 'size_t' to 'glm::mat<4,4,float,0>::length_type', possible loss of data
 D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\SceneImporter.cpp(80,39): warning C4267: 'argument': conversion from 'size_t' to 'glm::mat<4,4,float,0>::length_type', possible loss of data
 D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\SceneImporter.cpp(80,54): warning C4267: 'argument': conversion from 'size_t' to 'glm::mat<4,4,float,0>::length_type', possible loss of data
 D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\SceneImporter.cpp(80,69): warning C4267: 'argument': conversion from 'size_t' to 'glm::mat<4,4,float,0>::length_type', possible loss of data
   Shader.cpp
+  Sphere.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Sphere.cpp(28,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Sphere.cpp(34,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  SpotLight.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\SpotLight.cpp(40,22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  SunLight.cpp
+  Triangle.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\Triangle.cpp(28,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Generating Code...
   ACGM_RayTracer_lib.vcxproj -> D:\Plocha\FIIT\Ing\ACGMProj\x64\Debug\ACGM_RayTracer_lib.lib

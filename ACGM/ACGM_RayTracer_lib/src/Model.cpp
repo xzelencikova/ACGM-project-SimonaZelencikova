@@ -1,27 +1,24 @@
 #include <ACGM_RayTracer_lib/Model.h>
 
-acgm::Model::Model(const std::string name)
-  : name(name)
+//! Model constructor
+acgm::Model::Model(const std::string name) : name_(name)
 {
 }
 
-std::string acgm::Model::GetName()
-{
-    return name;
-}
-
+//! Set shader for model
 void acgm::Model::SetShader(const std::shared_ptr<acgm::Shader> shader)
 {
-    this->shader = shader;
+    shader_ = shader;
 }
 
 std::shared_ptr<acgm::Shader> acgm::Model::GetShader() const
 {
-    return shader;
+    return shader_;
 }
 
+//! Base intersection of model and ray
 std::optional<acgm::HitResult> acgm::Model::Intersect(std::shared_ptr<acgm::Ray>& ray) const
 {
-    acgm::HitResult result;
+    std::optional<acgm::HitResult> result;
     return result;
 }

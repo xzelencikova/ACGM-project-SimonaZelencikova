@@ -1,21 +1,25 @@
 #include "ACGM_RayTracer_lib/CheckerShader.h"
 
-acgm::CheckerShader::CheckerShader(float cube_size, const std::shared_ptr<Shader> shader0, const std::shared_ptr<Shader> shader1):
-	cube_size(cube_size), shader0(shader0), shader1(shader1)
+
+//! Checker Shader constructor
+acgm::CheckerShader::CheckerShader(const float cube_size, const std::shared_ptr<Shader> shader0, const std::shared_ptr<Shader> shader1):
+	cube_size_(cube_size), shader0_(shader0), shader1_(shader1)
 {
 }
 
-float acgm::CheckerShader::GetCubeSize()
-{
-	return cube_size;
-}
-
+//! Calculate color for checker shader
 cogs::Color3f acgm::CheckerShader::CalculateColor(const ShaderInput& input) const
 {
 	float bias = 0.001;
-	int choose_shader = floor((input.point.x / cube_size) + bias) + floor((input.point.y / cube_size) + bias) + floor((input.point.z / cube_size) + bias);
+	int32_t choose_shader = floor((input.point.x / cube_size_) + bias) + floor((input.point.y / cube_size_) + bias) + floor((input.point.z / cube_size_) + bias);
 	
+	//! Decision, which cube will be rendered
 	if (choose_shader % 2 == 0)
-		return shader0->CalculateColor(input);
-	else return shader1->CalculateColor(input);
+	{
+		return shader0_->CalculateColor(input);
+	}
+	else
+	{
+		return shader1_->CalculateColor(input);
+	}
 }

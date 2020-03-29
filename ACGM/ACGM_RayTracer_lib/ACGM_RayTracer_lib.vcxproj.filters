@@ -32,11 +32,14 @@
     <Filter Include="Public Source Files\Shader">
       <UniqueIdentifier>{46ef4c13-74e3-487c-96e4-a1424c126980}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public Source Files\Scene">
+      <UniqueIdentifier>{f7d1138b-76a9-49ab-918f-177f80590b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private Source Files\Scene">
+      <UniqueIdentifier>{f591c4fb-92b0-4b12-8fbb-b02ace8da2e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ACGM_RayTracer_lib\Scene.h">
-      <Filter>Public Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\ACGM_RayTracer_lib\Model.h">
       <Filter>Public Source Files\Models</Filter>
     </ClInclude>
@@ -70,23 +73,23 @@
     <ClInclude Include="include\ACGM_RayTracer_lib\Shader.h">
       <Filter>Public Source Files\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="include\ACGM_RayTracer_lib\SceneImporter.h">
-      <Filter>Public Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\ACGM_RayTracer_lib\Mesh.h">
       <Filter>Public Source Files\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ACGM_RayTracer_lib\Triangle.h">
-      <Filter>Public Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ACGM_RayTracer_lib\Sphere.h">
       <Filter>Public Source Files\Models</Filter>
     </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\Triangle.h">
+      <Filter>Public Source Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\Scene.h">
+      <Filter>Public Source Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\SceneImporter.h">
+      <Filter>Public Source Files\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Scene.cpp">
-      <Filter>Private Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Model.cpp">
       <Filter>Private Source Files\Models</Filter>
     </ClCompile>
@@ -120,17 +123,20 @@
     <ClCompile Include="src\Shader.cpp">
       <Filter>Private Source Files\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="src\SceneImporter.cpp">
-      <Filter>Private Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Mesh.cpp">
       <Filter>Private Source Files\Models</Filter>
     </ClCompile>
-    <ClCompile Include="src\Triangle.cpp">
-      <Filter>Private Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Sphere.cpp">
       <Filter>Private Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Triangle.cpp">
+      <Filter>Private Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneImporter.cpp">
+      <Filter>Private Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>Private Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

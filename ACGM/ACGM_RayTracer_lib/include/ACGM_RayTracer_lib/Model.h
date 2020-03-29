@@ -16,17 +16,17 @@ namespace acgm
   class Model
   {
   public:
+    //! Model constructor
     explicit Model(const std::string name);
     virtual ~Model() = default;
 
-    std::string GetName();
     void SetShader(const std::shared_ptr<acgm::Shader> shader);
     
     std::shared_ptr<acgm::Shader> GetShader() const;
     virtual std::optional<acgm::HitResult> Intersect(std::shared_ptr<acgm::Ray>& ray) const;
 
   private:
-    std::string name;
-    std::shared_ptr<acgm::Shader> shader;
+    const std::string name_;
+    std::shared_ptr<acgm::Shader> shader_;
   };
 }

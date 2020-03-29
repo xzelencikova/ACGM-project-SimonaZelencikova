@@ -4,6 +4,7 @@
 
 namespace acgm
 {
+    //! structure for shader input
     struct ShaderInput
     {
         glm::vec3 point;
@@ -20,11 +21,11 @@ namespace acgm
     public:
         Shader();
         ~Shader() = default;
-        explicit Shader(cogs::Color3f color);
+        explicit Shader(const cogs::Color3f color);
 
         virtual cogs::Color3f CalculateColor(const ShaderInput& input) const;
 
     private:
-        cogs::Color3f color;
+        cogs::Color3f color_;
     };
 }

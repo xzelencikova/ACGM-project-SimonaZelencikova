@@ -1,20 +1,17 @@
 #include "ACGM_RayTracer_lib/Light.h"
 
-
-acgm::Light::Light(float intensity, const glm::vec3 & position): intensity(intensity), position(position)
+//! Base light constructor
+acgm::Light::Light(const float intensity, const glm::vec3 position): 
+	intensity_(intensity), position_(position)
 {
-}
-
-float acgm::Light::GetIntensity() const
-{
-	return intensity;
 }
 
 glm::vec3 acgm::Light::GetPosition() const
 {
-	return position;
+	return position_;
 }
 
+//! Base functions for direction and intensity
 glm::vec3 acgm::Light::GetDirectionToLight(const glm::vec3& point) const
 {
 	return point;
@@ -22,5 +19,5 @@ glm::vec3 acgm::Light::GetDirectionToLight(const glm::vec3& point) const
 
 float acgm::Light::GetIntensityAt(const glm::vec3& point) const
 {
-	return intensity;
+	return intensity_;
 }

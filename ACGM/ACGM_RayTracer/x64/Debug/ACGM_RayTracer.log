@@ -1,1 +1,5 @@
-﻿  ACGM_RayTracer.vcxproj -> D:\Plocha\FIIT\Ing\ACGMProj\x64\Debug\ACGM_RayTracer.exe
+﻿  main.cpp
+  RayTracerGadget.cpp
+  RayTracerResource.cpp
+  Generating Code...
+  ACGM_RayTracer.vcxproj -> D:\Plocha\FIIT\Ing\ACGMProj\x64\Debug\ACGM_RayTracer.exe

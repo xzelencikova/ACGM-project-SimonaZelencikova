@@ -8,15 +8,13 @@ namespace acgm
   class Plane : public Model
   {
   public:
-      Plane(const glm::vec3 plane_pt, const glm::vec3 plane_norm, const std::string name);
+      Plane(const glm::vec3 point, const glm::vec3 normal, const std::string name);
       virtual ~Plane() = default;
 
-      glm::vec3 GetPlanePoint();
-      glm::vec3 GetPlaneNormal();
       virtual std::optional<acgm::HitResult> Intersect(std::shared_ptr<acgm::Ray>& ray) const override;
 
   private:
-      glm::vec3 plane_point;
-      glm::vec3 plane_normal;
+      glm::vec3 point_;
+      glm::vec3 normal_;
   };
 }

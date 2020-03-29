@@ -1,7 +1,7 @@
 #pragma once
 #include <Utils/Dialogs.h>
 
-#include <glm/glm.hpp>
+//#include <glm/glm.hpp>
 #include <ACGM_RayTracer_lib/Ray.h>
 
 
@@ -11,14 +11,18 @@ namespace acgm
     class Triangle
     {
     public:
-        explicit Triangle(const glm::vec3 vertexX, const glm::vec3 vertexY, const glm::vec3 vertexZ);
+        explicit Triangle(const glm::vec3 vertex_x, const glm::vec3 vertex_y, const glm::vec3 vertex_z);
         virtual ~Triangle() = default;
+
+        glm::vec3 GetVertexX() const;
+        glm::vec3 GetVertexY() const;
+        glm::vec3 GetVertexZ() const;
 
         float Intersect(std::shared_ptr<acgm::Ray> ray) const;
 
     private:
-        glm::vec3 vertexX;
-        glm::vec3 vertexY;
-        glm::vec3 vertexZ;
+        const glm::vec3 vertex_x_;
+        const glm::vec3 vertex_y_;
+        const glm::vec3 vertex_z_;
     };
 }
