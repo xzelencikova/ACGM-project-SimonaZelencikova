@@ -36,11 +36,13 @@ float acgm::SpotLight::GetIntensityAt(const glm::vec3& point) const
 
 	float size_spot_direction = pow(spot_direction.x, 2) + pow(spot_direction.y, 2) + pow(spot_direction.z, 2);
 	float size_light_direction = pow(light_direction.x, 2) + pow(light_direction.y, 2) + pow(light_direction.z, 2);
-	float angle = glm::acos(glm::dot(spot_direction, light_direction) / (sqrt(size_spot_direction) * sqrt(size_light_direction)));
+	float angle = glm::acos(glm::dot(spot_direction, -light_direction) / (sqrt(size_spot_direction) * sqrt(size_light_direction))) * 180 / 3.14;
 
-	if (angle > cutoff_angle) {
-		return 0.0f;
-	}
+	//printf("%f ", angle);
+
+	//if (angle > cutoff_angle) {
+//		return 0.0f;
+	//}
 
 	float decay = 1 - pow((angle / cutoff_angle), exponent);
 	return point_intensity * decay;

@@ -1,2 +1,3 @@
-﻿  Plane.cpp
+﻿  SpotLight.cpp
+D:\Plocha\FIIT\Ing\ACGMProj\ACGM_RayTracer_lib\src\SpotLight.cpp(39,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   ACGM_RayTracer_lib.vcxproj -> D:\Plocha\FIIT\Ing\ACGMProj\x64\Release\ACGM_RayTracer_lib.lib

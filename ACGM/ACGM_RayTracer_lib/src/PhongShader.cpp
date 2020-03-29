@@ -1,5 +1,4 @@
 #include "ACGM_RayTracer_lib/PhongShader.h"
-#include <regex>
 
 acgm::PhongShader::PhongShader(cogs::Color3f color, float shininess,
     float ambient, float diffuse, float specular): Shader(color)

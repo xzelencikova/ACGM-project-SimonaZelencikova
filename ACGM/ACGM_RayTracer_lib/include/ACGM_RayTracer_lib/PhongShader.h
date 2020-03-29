@@ -1,6 +1,6 @@
 #pragma once
-#include <COGS/Color.h>
-#include <glm/glm.hpp>
+//#include <COGS/Color.h>
+//#include <glm/glm.hpp>
 
 #include <ACGM_RayTracer_lib/Shader.h>
 

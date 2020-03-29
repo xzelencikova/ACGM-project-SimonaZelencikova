@@ -1,6 +1,8 @@
 #pragma once
-#include <glm/glm.hpp>
-#include <ACGM_RayTracer_lib\PhongShader.h>
+//#include <glm/glm.hpp>
+//#include <ACGM_RayTracer_lib\PhongShader.h>
+
+#include <ACGM_RayTracer_lib\Shader.h>
 
 namespace acgm
 {

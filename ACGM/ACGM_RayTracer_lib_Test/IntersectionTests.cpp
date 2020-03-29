@@ -10,20 +10,20 @@
 TEST(IntersectionTests, RayPlaneIntersectionTest)
 {
   // #TODO: Write test for ray-plane intersections here
-    const auto ray = std::make_shared<acgm::Ray>(glm::vec3(0, 0, 0), glm::vec3(0, 0, -1));
+    auto ray = std::make_shared<acgm::Ray>(glm::vec3(0, 0, 0), glm::vec3(0, 0, -1));
     const auto plane_back = std::make_shared<acgm::Plane>(glm::vec3(0, 0, 5), glm::vec3(0, 0, 1));
 
     std::optional<acgm::HitResult> hit;
 
     EXPECT_TRUE(glm::epsilonEqual<float>(
         hit->ray_param,
-        plane_back->Intersect(*ray)->ray_param,
-        glm::epsilon<float>();
+        plane_back->Intersect(ray)->ray_param,
+        glm::epsilon<float>()
         ));
   //EXPECT_EQ(1, 1);
 }
 
-TEST(IntersectionTests, RaySphereIntersectionTest)
+/*TEST(IntersectionTests, RaySphereIntersectionTest)
 {
     // #TODO: Write test for ray-plane intersections here
     const auto ray = std::make_shared<acgm::Ray>(glm::vec3(0, 0, 0), glm::vec3(0, 0, -1));
@@ -54,3 +54,4 @@ TEST(IntersectionTests, RayMeshIntersectionTest)
     ));
     //EXPECT_EQ(1, 1);
 }
+*/

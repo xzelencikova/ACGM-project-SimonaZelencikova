@@ -3,7 +3,7 @@
 
 
 acgm::Scene::Scene(const std::shared_ptr<acgm::Camera>& camera, const std::shared_ptr<acgm::Light>& light, const std::vector<std::shared_ptr<acgm::Model>>& models) : 
-    models_(move(models)), camera(camera), light(light)
+    models_(models), camera(camera), light(light)
 {
 }
 
@@ -32,9 +32,10 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
     ShaderInput input;
 
     float min;
+    int index;
   
     //! using OMP to parallelize rendering, default 4 threads for now
-//#pragma omp parallel for private(row, column, i)//min, input, ray, shadow_ray, ray_hit, shadow_ray_hit, direction)
+//#pragma omp parallel for private(row, column, i,/*, ray, shadow_ray, ray_hit, direction, input*/) shared(x, y, index)//min, input, ray, shadow_ray, ray_hit, shadow_ray_hit, direction)
     for (row = 0; row < renderer.GetResolution().y; row++)
     {
         for (column = 0; column < renderer.GetResolution().x; column++)
@@ -42,15 +43,13 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
             direction = glm::normalize(camera->GetForwardDirection() + x * camera->GetRightDirection() + y * camera->GetUpDirection());
             ray = std::make_shared<acgm::Ray>(camera->GetPosition(), direction, bias);
 
-            int index = -1;
+            index = -1;
             min_ray->ray_param = 10000.0f;
-//            printf("%d ", index);
+
             //! Search for nearest intersect ray x model and shadow ray x model
             for (i = 0; i < models_.size(); i++)
             {
                 ray_hit = models_.at(i)->Intersect(ray);
-
-            //    if (ray_hit == std::nullopt) continue;
              
                 if (ray_hit->ray_param > 0 && ray_hit->ray_param < min_ray->ray_param && ray_hit->ray_param < camera->GetZFar() && ray_hit->ray_param > camera->GetZNear())
                 {
@@ -70,13 +69,10 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
 
             min = 10000.0f;
 
-         //   min_s_ray = SearchModel(*ray, camera, index);
             for (i = 0; i < models_.size(); i++)
             {
                 // ! Cast Shadow Ray
                 shadow_ray_hit = models_.at(i)->Intersect(shadow_ray);
-
-                //if (shadow_ray_hit == std::nullopt) continue;
                 
                 if (shadow_ray_hit->ray_param > 0 && shadow_ray_hit->ray_param < min)
                 {
@@ -90,7 +86,6 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
 
             if (min < get_distance)
             {
-             //   printf("shadow: %d %d\n", row, column);
                 input.is_point_in_shadow = true;
             }
             else input.is_point_in_shadow = false;
@@ -105,28 +100,3 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
     }
     printf("Done rendering");
 }
-
-//std::optional<acgm::HitResult> acgm::Scene::SearchModel(acgm::Ray &ray, std::shared_ptr<acgm::Camera> camera, int &index) const
-//{
-//    std::optional<acgm::HitResult> hit;
-//    std::optional<acgm::HitResult> min_ray;
-//
-//    min_ray->ray_param = 10000.f;
-//    //!Search for nearest intersect ray x modeland shadow ray x model
-//    for (int i = 0; i < models_.size(); i++)
-//    {
-//       hit = models_.at(i)->Intersect(ray);
-//
-//       if (hit == std::nullopt) continue;
-//
-//       if (hit->ray_param > 0 && hit->ray_param < min_ray->ray_param && hit->ray_param < camera->GetZFar() && hit->ray_param > camera->GetZNear())
-//       {
-//                min_ray->ray_param = hit->ray_param;
-//                min_ray->normal = hit->normal;
-//                min_ray->point = hit->point;
-//                index = i;
-//       }
-//    }
-//
-//    return hit;
-//}
