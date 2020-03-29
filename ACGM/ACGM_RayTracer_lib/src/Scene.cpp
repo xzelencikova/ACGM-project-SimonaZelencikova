@@ -42,7 +42,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
             direction = glm::normalize(camera->GetForwardDirection() + x * camera->GetRightDirection() + y * camera->GetUpDirection());
             ray = std::make_shared<acgm::Ray>(camera->GetPosition(), direction, bias);
 
-            int index = 0;
+            int index = -1;
             min_ray->ray_param = 10000.0f;
 //            printf("%d ", index);
             //! Search for nearest intersect ray x model and shadow ray x model
@@ -95,7 +95,8 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
             }
             else input.is_point_in_shadow = false;
 
-            renderer.SetPixel(column, renderer.GetResolution().y - row - 1, models_.at(index)->GetShader()->CalculateColor(input));
+            if (index > -1)
+                renderer.SetPixel(column, renderer.GetResolution().y - row - 1, models_.at(index)->GetShader()->CalculateColor(input));
 
             x += dx;
         }

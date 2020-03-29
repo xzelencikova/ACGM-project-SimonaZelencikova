@@ -27,7 +27,7 @@ std::optional<acgm::HitResult> acgm::Plane::Intersect(std::shared_ptr<acgm::Ray>
 //    ! Set hit params of plane and ray intersection
     hit.ray_param = glm::dot((plane_point - ray->GetOrigin()), plane_normal) / dot2;
     hit.normal = plane_normal;
-    hit.point = ray->GetPoint(hit.ray_param);
+    hit.point = ray->GetPoint(hit.ray_param) + (hit.normal * ray->GetBias());;
 
     return hit;
 }
