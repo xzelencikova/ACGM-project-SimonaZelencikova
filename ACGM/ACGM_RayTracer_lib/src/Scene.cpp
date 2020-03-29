@@ -81,10 +81,14 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 if (shadow_ray_hit->ray_param > 0 && shadow_ray_hit->ray_param < min)
                 {
                      min = shadow_ray_hit->ray_param;
+                     min_s_ray->normal = shadow_ray_hit->normal;
+                     min_s_ray->point = shadow_ray_hit->point;
                 }
             }
             
-            if (min_ray->ray_param > min)
+            float get_distance = glm::distance(input.point, light->GetPosition());
+
+            if (min < get_distance)
             {
              //   printf("shadow: %d %d\n", row, column);
                 input.is_point_in_shadow = true;

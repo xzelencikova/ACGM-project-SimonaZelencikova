@@ -13,8 +13,7 @@ namespace acgm
         ~Mesh() = default;
 
         virtual std::optional<acgm::HitResult> Intersect(std::shared_ptr<acgm::Ray>& ray) const override;
-        std::optional<acgm::HitResult> TriangleIntersect(glm::vec3 &vertexX, glm::vec3 &vertexY, glm::vec3 &vertexZ, std::shared_ptr<acgm::Ray>& ray) const;
-
+       
     private:
         std::string file_name;
         glm::mat4 transform;

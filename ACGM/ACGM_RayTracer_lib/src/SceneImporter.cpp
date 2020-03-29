@@ -198,7 +198,7 @@ std::shared_ptr<acgm::Light> acgm::SceneImporter::ReadLight()
     const auto intensity = ReadFloat();
     const auto direction = ReadVec3();
     
-    light = std::make_shared<acgm::SunLight>(intensity, direction);
+    light = std::make_shared<acgm::SunLight>(intensity, direction, glm::vec3(1000.0f, 1000.0f, 1000.0f));
   }
   if (light_type == LIGHTTYPE_POINT)
   {

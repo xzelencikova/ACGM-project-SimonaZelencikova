@@ -20,7 +20,6 @@ namespace acgm
         virtual float GetIntensityAt(const glm::vec3& point) const override;
 
     private:
-        glm::vec3 position;
         float range;
         float linear_attenuation;
         float quadratic_attenuation;
