@@ -30,7 +30,7 @@ std::optional<acgm::HitResult> acgm::Mesh::Intersect(std::shared_ptr<acgm::Ray>&
         //! Call intersection for each triangle
         std::optional<acgm::HitResult> hit = triangle.Intersect(ray);
 
-        if (hit->ray_param > FLT_EPSILON && hit->ray_param < min_hit->ray_param)
+        if (hit->ray_param > 0.0f && hit->ray_param < min_hit->ray_param)
         {
             min_hit->ray_param = hit->ray_param;
             min_hit->normal = glm::cross(triangle.GetVertexY() - triangle.GetVertexX(), triangle.GetVertexZ() - triangle.GetVertexX());

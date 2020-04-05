@@ -9,9 +9,7 @@ acgm::Scene::Scene(const std::shared_ptr<acgm::Camera>& camera, const std::share
 
 //! Scene rendering function
 void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
-{
-//    float y = tan(camera->GetFovYRad() / 2.0f);
-    
+{   
     float dy = 2 * tan(camera->GetFovYRad() / 2.0f) / float(renderer.GetResolution().y);
     float dx = 2 * tan(camera->GetFovYRad() / 2.0f) / float(renderer.GetResolution().x);
 
@@ -41,7 +39,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
             {
                 std::optional<HitResult> ray_hit = models_.at(i)->Intersect(ray);
              
-                if (ray_hit->ray_param > FLT_EPSILON && ray_hit->ray_param < min_ray->ray_param && ray_hit->ray_param < camera->GetZFar() && ray_hit->ray_param > camera->GetZNear())
+                if (ray_hit->ray_param > 0.0f && ray_hit->ray_param < min_ray->ray_param && ray_hit->ray_param < camera->GetZFar() && ray_hit->ray_param > camera->GetZNear())
                 {
                     min_ray->ray_param = ray_hit->ray_param;
                     min_ray->normal = ray_hit->normal;
@@ -67,7 +65,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
             {
                 std::optional<HitResult> ray_hit = models_.at(i)->Intersect(shadow_ray);
                 
-                if (ray_hit->ray_param > FLT_EPSILON && ray_hit->ray_param < min_ray->ray_param)
+                if (ray_hit->ray_param > 0.0f && ray_hit->ray_param < min_ray->ray_param)
                 {
                      min_ray->ray_param = ray_hit->ray_param;
                 }

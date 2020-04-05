@@ -1,6 +1,6 @@
 ﻿  Generating code
-  0 of 1597 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  4 of 1601 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   ACGM_RayTracer.vcxproj -> D:\Plocha\FIIT\Ing\ACGMProj\x64\Release\ACGM_RayTracer.exe
