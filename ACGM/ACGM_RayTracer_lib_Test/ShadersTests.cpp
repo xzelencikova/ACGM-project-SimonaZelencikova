@@ -32,7 +32,7 @@
 //
 //    //EXPECT_EQ(1, 1);
 //}
-//
+
 //TEST(ShadersTests, CheckerShaderColorTest)
 //{
 //    const auto phong_shader_gray = std::make_shared<acgm::PhongShader>(cogs::Color3f(0.1f, 0.1f, 0.1f), 5, 0.3, 0.7, 0);

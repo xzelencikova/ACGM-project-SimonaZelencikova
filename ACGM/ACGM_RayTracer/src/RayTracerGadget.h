@@ -8,18 +8,19 @@
 
 //! Visual part of the RayTracer HIRO module.
 class RayTracerGadget
-  : public hiro::Gadget
+    : public hiro::Gadget
 {
 public:
-  //! Construct with a HIRO resource.
-  explicit RayTracerGadget(const hiro::Resource *res);
+    //! Construct with a HIRO resource.
+    explicit RayTracerGadget(const hiro::Resource *res);
 
-  void RayTracerGadget::GenerateGui(hiro::GuiGenerator& gui) override;
-  static void RayTracerGadget::ImportAndRenderScene(std::string fileName);
+    //! Generate scene and gui methods
+    void RayTracerGadget::GenerateGui(hiro::GuiGenerator& gui) override;
+    static void RayTracerGadget::ImportAndRenderScene(std::string fileName);
 
-  void Initialize() override;
+    void Initialize() override;
 
 private:
-  //! Structure specifying how the raster should be rendered.
-  hiro::draw::PRasterStyle style_;
+    //! Structure specifying how the raster should be rendered.
+    hiro::draw::PRasterStyle style_;
 };

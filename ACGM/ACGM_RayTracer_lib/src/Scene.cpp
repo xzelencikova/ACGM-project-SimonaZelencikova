@@ -10,44 +10,38 @@ acgm::Scene::Scene(const std::shared_ptr<acgm::Camera>& camera, const std::share
 //! Scene rendering function
 void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
 {
-    float y;// = tan(camera->GetFovYRad() / 2.0f);
-    float x;// = -y;
+//    float y = tan(camera->GetFovYRad() / 2.0f);
     
     float dy = 2 * tan(camera->GetFovYRad() / 2.0f) / float(renderer.GetResolution().y);
     float dx = 2 * tan(camera->GetFovYRad() / 2.0f) / float(renderer.GetResolution().x);
-    
-    std::optional<HitResult> ray_hit;
-    std::optional<HitResult> min_ray;
-
-    std::shared_ptr <acgm::Ray> ray;
-    std::shared_ptr <acgm::Ray> shadow_ray;
 
     float bias = 0.001;
-    ShaderInput input;
 
     float test_y = tan(camera->GetFovYRad() / 2.0f);
-    float test_x = -test_y;
 
-    int32_t row, column, i, index;
+    int32_t row, column, i;
   
-    //! OMP works, needs to uncomment, but some pixels are not very well rendered 
-//#pragma omp parallel for private(row, column, i, index, ray, shadow_ray, min_ray, ray_hit, input)
+    //! OMP to parallelize the rendering
+#pragma omp parallel for private(row, column, i)
     for (row = 0; row < renderer.GetResolution().y; row++)
     {
+        float y = test_y - (row * dy);
+        float x = -tan(camera->GetFovYRad() / 2.0f);
         for (column = 0; column < renderer.GetResolution().x; column++)
         {
             glm::vec3 direction = glm::normalize(camera->GetForwardDirection() + x * camera->GetRightDirection() + y * camera->GetUpDirection());
-            ray = std::make_shared<acgm::Ray>(camera->GetPosition(), direction, bias);
+            std::shared_ptr <acgm::Ray> ray = std::make_shared<acgm::Ray>(camera->GetPosition(), direction, bias);
 
-            index = -1;
-            min_ray->ray_param = 10000.0f;
+            int32_t index = -1;
+            std::optional<HitResult> min_ray;
+            min_ray->ray_param = INFINITY;
 
             //! Search for nearest intersect ray x model
             for (i = 0; i < models_.size(); i++)
             {
-                ray_hit = models_.at(i)->Intersect(ray);
+                std::optional<HitResult> ray_hit = models_.at(i)->Intersect(ray);
              
-                if (ray_hit->ray_param > 0 && ray_hit->ray_param < min_ray->ray_param && ray_hit->ray_param < camera->GetZFar() && ray_hit->ray_param > camera->GetZNear())
+                if (ray_hit->ray_param > FLT_EPSILON && ray_hit->ray_param < min_ray->ray_param && ray_hit->ray_param < camera->GetZFar() && ray_hit->ray_param > camera->GetZNear())
                 {
                     min_ray->ray_param = ray_hit->ray_param;
                     min_ray->normal = ray_hit->normal;
@@ -56,6 +50,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 }
             }
             //! Set input params for shader, initializing is_point_in_shadow to false for now
+            ShaderInput input;
             input.is_point_in_shadow = false;
             input.direction_to_light =  glm::normalize(light->GetDirectionToLight(min_ray->point));
             input.normal = glm::normalize(min_ray->normal);
@@ -63,16 +58,16 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
             input.direction_to_eye = glm::normalize(camera->GetPosition() - min_ray->point);
             input.light_intensity = light->GetIntensityAt(min_ray->point);
             
-            shadow_ray = std::make_shared<acgm::Ray>(input.point, input.direction_to_light, bias);
+            std::shared_ptr <acgm::Ray> shadow_ray = std::make_shared<acgm::Ray>(input.point, input.direction_to_light, bias);
 
-            min_ray->ray_param = 10000.0f;
+            min_ray->ray_param = INFINITY;
 
             //! Search for nearest intersect shadow ray x model
             for (i = 0; i < models_.size(); i++)
             {
-                ray_hit = models_.at(i)->Intersect(shadow_ray);
+                std::optional<HitResult> ray_hit = models_.at(i)->Intersect(shadow_ray);
                 
-                if (ray_hit->ray_param > 0 && ray_hit->ray_param < min_ray->ray_param)
+                if (ray_hit->ray_param > FLT_EPSILON && ray_hit->ray_param < min_ray->ray_param)
                 {
                      min_ray->ray_param = ray_hit->ray_param;
                 }
@@ -80,6 +75,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
             
             //! Find out, if the point is in shadow
             float get_distance = glm::distance(input.point, light->GetPosition());
+            
             if (min_ray->ray_param < get_distance)
             {
                 input.is_point_in_shadow = true;
@@ -90,11 +86,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 renderer.SetPixel(column, renderer.GetResolution().y - row - 1, models_.at(index)->GetShader()->CalculateColor(input));
             }
 
-           // x += dx;
-            x = ((column + 1) * dx) + test_x;
+            x += dx;
         }
-        //y -= dy;
-        y = test_y - ((row + 1) * dy);
-        x = -tan(camera->GetFovYRad() / 2.0f);
     }
 }

@@ -1,5 +1,6 @@
 #include <ACGM_RayTracer_lib/Mesh.h>
 
+
 //! Mesh constructor
 acgm::Mesh::Mesh(const std::string file_name, const glm::mat4 transform, const std::string name):
     file_name_(file_name), transform_(transform), Model(name)
@@ -13,7 +14,7 @@ acgm::Mesh::Mesh(const std::string file_name, const glm::mat4 transform, const s
 std::optional<acgm::HitResult> acgm::Mesh::Intersect(std::shared_ptr<acgm::Ray>& ray) const
 {
     std::optional<HitResult> min_hit;
-    min_hit->ray_param = 10000.0f;
+    min_hit->ray_param = INFINITY;
     int32_t j;
 
     //! Find nearest intersection among all triangles
@@ -27,11 +28,11 @@ std::optional<acgm::HitResult> acgm::Mesh::Intersect(std::shared_ptr<acgm::Ray>&
         Triangle triangle = Triangle(mesh_.points->GetPositions()[vertX], mesh_.points->GetPositions()[vertY], mesh_.points->GetPositions()[vertZ]);
         
         //! Call intersection for each triangle
-        float hit = triangle.Intersect(ray);
+        std::optional<acgm::HitResult> hit = triangle.Intersect(ray);
 
-        if (hit > 0 && hit < min_hit->ray_param)
+        if (hit->ray_param > FLT_EPSILON && hit->ray_param < min_hit->ray_param)
         {
-            min_hit->ray_param = hit;
+            min_hit->ray_param = hit->ray_param;
             min_hit->normal = glm::cross(triangle.GetVertexY() - triangle.GetVertexX(), triangle.GetVertexZ() - triangle.GetVertexX());
             min_hit->point = ray->GetPoint(min_hit->ray_param) + (min_hit->normal * ray->GetBias());
         }

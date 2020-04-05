@@ -6,16 +6,16 @@
 
 
 RayTracerGadget::RayTracerGadget(const hiro::Resource *res)
-  : hiro::Gadget(res)
+    : hiro::Gadget(res)
 {
 }
 
 void RayTracerGadget::Initialize()
 {
-  hiro::Gadget::Initialize();
-  style_ = std::make_shared<hiro::draw::RasterStyle>();
-  style_->use_nearest_filtering = true;
-  AddRenderer(GetResource<RayTracerResource>()->GetRenderer(), style_);
+    hiro::Gadget::Initialize();
+    style_ = std::make_shared<hiro::draw::RasterStyle>();
+    style_->use_nearest_filtering = true;
+    AddRenderer(GetResource<RayTracerResource>()->GetRenderer(), style_);
 }
 
 void RayTracerGadget::GenerateGui(hiro::GuiGenerator& gui)

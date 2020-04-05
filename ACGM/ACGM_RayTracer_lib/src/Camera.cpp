@@ -10,7 +10,7 @@ acgm::Camera::Camera(const glm::vec3 &position, const glm::vec3 &up_direction, c
 
 glm::vec3 acgm::Camera::GetPosition() const
 {
-  return position_;
+    return position_;
 }
 
 glm::vec3 acgm::Camera::GetForwardDirection() const

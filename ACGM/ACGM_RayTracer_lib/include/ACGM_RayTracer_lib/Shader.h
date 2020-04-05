@@ -1,6 +1,7 @@
 #pragma once
-#include <COGS/Color.h>
 #include <glm/glm.hpp>
+#include <COGS/Color.h>
+
 
 namespace acgm
 {
@@ -19,13 +20,12 @@ namespace acgm
     class Shader
     {
     public:
-        Shader();
-        ~Shader() = default;
-        explicit Shader(const cogs::Color3f color);
+        //! Shader constructor
+        explicit Shader();
+        virtual ~Shader() = default;
 
+        //! Calculate shader color
         virtual cogs::Color3f CalculateColor(const ShaderInput& input) const;
 
-    private:
-        cogs::Color3f color_;
     };
 }

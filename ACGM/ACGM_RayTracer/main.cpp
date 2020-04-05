@@ -6,19 +6,19 @@
 
 int main()
 {
-  hiro::SetAssetDirectory("../../hiro_libs/assets/");
-  hiro::SetIntermediateDirectory("./temp/");
+    hiro::SetAssetDirectory("../../hiro_libs/assets/");
+    hiro::SetIntermediateDirectory("./temp/");
 
-  hiro::Initialize();
+    hiro::Initialize();
 
-  auto resource = std::make_shared<RayTracerResource>("RayTraced Scene");
-  hiro::AddResource(resource);
+    auto resource = std::make_shared<RayTracerResource>("RayTraced Scene");
+    hiro::AddResource(resource);
 
-  while (hiro::IsOpen())
-  {
-    hiro::Update();
-  }
+    while (hiro::IsOpen())
+    {
+        hiro::Update();
+    }
 
-  hiro::Terminate();
-  return 0;
+    hiro::Terminate();
+    return 0;
 }

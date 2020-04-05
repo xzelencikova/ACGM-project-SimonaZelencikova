@@ -7,26 +7,31 @@
 
 namespace acgm
 {
-  struct HitResult {
-      glm::vec3 normal;
-      glm::vec3 point;
-      float ray_param;
-  };
-  //! Model  - abstract base class for scene models
-  class Model
-  {
-  public:
-    //! Model constructor
-    explicit Model(const std::string name);
-    virtual ~Model() = default;
+    //! Structure for values od ray hit
+    struct HitResult {
+        glm::vec3 normal;
+        glm::vec3 point;
+        float ray_param;
+    };
+    //! Model  - abstract base class for scene models
+    class Model
+    {
+    public:
+        //! Model constructor
+        explicit Model(const std::string name);
+        virtual ~Model() = default;
 
-    void SetShader(const std::shared_ptr<acgm::Shader> shader);
+        //! Set shader for model method
+        void SetShader(const std::shared_ptr<acgm::Shader> shader);
     
-    std::shared_ptr<acgm::Shader> GetShader() const;
-    virtual std::optional<acgm::HitResult> Intersect(std::shared_ptr<acgm::Ray>& ray) const;
+        //! Get shader method
+        std::shared_ptr<acgm::Shader> GetShader() const;
+        //! Model intersection with ray base method
+        virtual std::optional<acgm::HitResult> Intersect(std::shared_ptr<acgm::Ray>& ray) const;
 
-  private:
-    const std::string name_;
-    std::shared_ptr<acgm::Shader> shader_;
-  };
+    private:
+        //! Model name and shader
+        const std::string name_;
+        std::shared_ptr<acgm::Shader> shader_;
+    };
 }

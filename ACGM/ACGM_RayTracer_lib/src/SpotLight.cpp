@@ -3,6 +3,7 @@
 #define ANGLE 180.0f
 #define PI 3.1415927
 
+
 //! Spot light constructor
 acgm::SpotLight::SpotLight(const float intensity, const glm::vec3 position, const float range, const float linear_attenuation, 
 	const float quadratic_attenuation, const glm::vec3 spot_direction, const float cutoff_angle, const float exponent):

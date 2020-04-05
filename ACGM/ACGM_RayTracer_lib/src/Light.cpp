@@ -1,5 +1,6 @@
 #include "ACGM_RayTracer_lib/Light.h"
 
+
 //! Base light constructor
 acgm::Light::Light(const float intensity, const glm::vec3 position): 
 	intensity_(intensity), position_(position)

@@ -5,12 +5,8 @@ acgm::Shader::Shader()
 {
 }
 
-acgm::Shader::Shader(const cogs::Color3f color):color_(color)
-{
-}
-
 //! Base CalculateColor returns input color
 cogs::Color3f acgm::Shader::CalculateColor(const ShaderInput& input) const
 {
-	return color_;
+	return cogs::Color3f(1.0f, 1.0f, 1.0f);
 }

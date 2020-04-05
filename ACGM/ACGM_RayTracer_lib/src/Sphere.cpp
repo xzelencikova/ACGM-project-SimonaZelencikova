@@ -5,7 +5,7 @@
 
 //! Sphere constructor
 acgm::Sphere::Sphere(const glm::vec3 &position, float radius, std::string name)
-  : Model(name), position_(position), radius_(radius)
+    : Model(name), position_(position), radius_(radius)
 {
 }
 

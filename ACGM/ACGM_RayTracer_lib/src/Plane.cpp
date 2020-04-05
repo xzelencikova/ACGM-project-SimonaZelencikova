@@ -11,7 +11,7 @@ std::optional<acgm::HitResult> acgm::Plane::Intersect(std::shared_ptr<acgm::Ray>
 {
     float dot2 = glm::dot(ray->GetDirection(), normal_);
     //! Denominator can't be 0
-    if (dot2 == 0)
+    if (dot2 < FLT_EPSILON && dot2 > -FLT_EPSILON)
     {
         return std::nullopt;
     }
