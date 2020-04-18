@@ -25,7 +25,7 @@ void RayTracerGadget::GenerateGui(hiro::GuiGenerator& gui)
     hiro::gui::Button* model_button_;
     
     model_selector_ = gui.AddDroplist("Scene File")
-        ->AddItemsIndexed({ "scene0.txt", "scene1.txt", "scene2.txt" })
+        ->AddItemsIndexed({ "scene0.txt", "scene1.txt", "scene2.txt", "scene3.txt", "scene4.txt", "scene5.txt", "scene6.txt" })
         ->Set(0);
 
     model_button_ = gui.AddButton("Import and Render");

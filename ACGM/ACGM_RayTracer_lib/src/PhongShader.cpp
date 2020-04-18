@@ -2,8 +2,8 @@
 
 
 //! PhongShader constructor
-acgm::PhongShader::PhongShader(const cogs::Color3f color, const float shininess, const float ambient, const float diffuse, const float specular): 
-    color_(color), shininess_(shininess), ambient_(ambient), diffuse_(diffuse), specular_(specular)
+acgm::PhongShader::PhongShader(const cogs::Color3f color, const float shininess, const float ambient, const float diffuse, const float specular, const float glossiness):
+    color_(color), shininess_(shininess), ambient_(ambient), diffuse_(diffuse), specular_(specular), glossiness_(glossiness)
 {
 }
 

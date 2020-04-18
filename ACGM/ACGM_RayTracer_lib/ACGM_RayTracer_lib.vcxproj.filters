@@ -38,6 +38,12 @@
     <Filter Include="Private Source Files\Scene">
       <UniqueIdentifier>{f591c4fb-92b0-4b12-8fbb-b02ace8da2e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public Source Files\Image">
+      <UniqueIdentifier>{b6acfa9f-26e7-4f54-a36d-d84b2915bcbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private Source Files\Image">
+      <UniqueIdentifier>{cd1d9356-64c5-4b62-9769-8f6c869f0e90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ACGM_RayTracer_lib\Model.h">
@@ -88,6 +94,9 @@
     <ClInclude Include="include\ACGM_RayTracer_lib\SceneImporter.h">
       <Filter>Public Source Files\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="include\ACGM_RayTracer_lib\Image.h">
+      <Filter>Public Source Files\Image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Model.cpp">
@@ -137,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="src\Scene.cpp">
       <Filter>Private Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Image.cpp">
+      <Filter>Private Source Files\Image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
