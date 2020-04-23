@@ -7,8 +7,8 @@
 
 //! Scene constructor
 acgm::Scene::Scene(const std::shared_ptr<acgm::Camera>& camera, const std::shared_ptr<acgm::Light>& light, const std::vector<std::shared_ptr<acgm::Model>>& models,
-    const glm::vec3& enviro_up, const glm::vec3& enviro_seam, float bias, std::string enviro_image_file) :
-    models_(models), camera(camera), light(light), enviro_up_(enviro_up), enviro_seam_(enviro_seam), bias_(bias), enviro_image_file_(enviro_image_file)
+    const glm::vec3& enviro_up, const glm::vec3& enviro_seam, float bias, std::string enviro_image_file, const float max_depth) :
+    models_(models), camera(camera), light(light), enviro_up_(enviro_up), enviro_seam_(enviro_seam), bias_(bias), enviro_image_file_(enviro_image_file), max_depth_(max_depth)
 {
 }
 
@@ -85,39 +85,94 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 input.is_point_in_shadow = true;
             }
 
-            if (index > -1)
-            {
-                renderer.SetPixel(column, renderer.GetResolution().y - row - 1, models_.at(index)->GetShader()->CalculateColor(input));
-            }
-            else if (enviro_image_file_.compare("") != 0)
-            {
-//                float x_y_coord = - enviro_up_.x / enviro_up_.z;
-//                float x_z_coord = - enviro_up_.x / enviro_up_.z;
-//                printf("%f %f\n", x_y_coord, x_z_coord);
-
-//                glm::vec3 orth_vector = glm::vec3(enviro_up_.x, x_y_coord, x_z_coord);
-//                float size_orth_vector = sqrt((orth_vector.x * orth_vector.x) + (orth_vector.y * orth_vector.y) + (orth_vector.z * orth_vector.z));
-//                orth_vector = orth_vector / size_orth_vector;
-
-                //! orthonogal vector to enviro_up... since there's only 1 not null value in vec, only 0,0,0 is possible ort vector 
-                glm::vec3 orth_vector = glm::cross(glm::normalize(direction), glm::normalize(enviro_up_));
-                float latitude = std::acos(glm::dot(glm::normalize(enviro_up_), glm::normalize(direction)));
-                float longitude = glm::orientedAngle(glm::normalize(orth_vector), glm::normalize(enviro_seam_), glm::normalize(enviro_up_));
-
-                //! map long/lat na uv
-                //! based on (formula value - down_first_range) * (up_second_range - down_second_range) / (up_first_range - down_first_range)
-                
-                //! mapping range <0, PI> to <0, 1>
-                float v_coord = longitude / PI;
-                //! mapping range <-PI, PI> to <0, 1>
-                float u_coord = (latitude - (-PI)) / (2 * PI);
-
-         //       printf("%f %f %f\n", orth_vector.x, orth_vector.y, orth_vector.z);
-
-                renderer.SetPixel(column, renderer.GetResolution().y - row - 1, image->GetColorAt(glm::vec2(u_coord, v_coord)));
-            }
+//            std::shared_ptr<acgm::Ray> pom_ray = std::make_shared<acgm::Ray>(input.point - camera->GetPosition(), -direction, bias_);
+            renderer.SetPixel(column, renderer.GetResolution().y - row - 1, ReflectionColor(ray, input, index, max_depth_, image));
 
             x += dx;
+        }
+    }
+}
+
+//! Calculate glossiness color for a pixel
+cogs::Color3f acgm::Scene::ReflectionColor(std::shared_ptr<acgm::Ray> view_ray, ShaderInput input, int index, int depth, std::shared_ptr<acgm::Image> image) const
+{
+    if (index == -1)
+    {
+        if (enviro_image_file_.compare("") != 0)
+        {
+            glm::vec3 orth_vector = view_ray->GetDirection() - enviro_up_ * glm::dot(enviro_up_, view_ray->GetDirection());
+            float latitude = std::acos(glm::dot(glm::normalize(enviro_up_), glm::normalize(view_ray->GetDirection())));
+            float longitude = glm::orientedAngle(glm::normalize(orth_vector), glm::normalize(enviro_seam_), glm::normalize(enviro_up_));
+
+            //! map long/lat na uv
+            //! based on (formula value - down_first_range) * (up_second_range - down_second_range) / (up_first_range - down_first_range)
+
+            //! mapping range <0, PI> to <0, 1>
+            float v_coord = latitude / PI;
+            //! mapping range <-PI, PI> to <0, 1>
+            float u_coord = (longitude + PI) / (2 * PI);
+            return image->GetColorAt(glm::vec2(u_coord, v_coord));
+        }
+        return cogs::Color3f(0.0f, 0.0f, 0.0f);
+    }
+    else
+    {
+        Color c = models_.at(index)->GetShader()->CalculateColor(input);
+        if (c.glossiness > -FLT_EPSILON && c.glossiness < FLT_EPSILON || depth == 1)
+        {
+            return models_.at(index)->GetShader()->CalculateColor(input).color;
+        }
+        else
+        {
+            glm::vec3 reflected_direction = view_ray->GetReflectionDirection(input.normal);
+            std::shared_ptr<acgm::Ray> reflected_ray = std::make_shared<acgm::Ray>(input.point, reflected_direction, view_ray->GetBias());
+            std::optional<acgm::HitResult> min_ray;
+            min_ray->ray_param = INFINITY;
+            int new_index = -1;
+
+            for (int i = 0; i < models_.size(); i++)
+            {
+                std::optional<HitResult> ray_hit = models_.at(i)->Intersect(reflected_ray);
+
+                if (ray_hit->ray_param > 0.0f && ray_hit->ray_param < min_ray->ray_param)
+                {
+                    min_ray->ray_param = ray_hit->ray_param;
+                    min_ray->normal = ray_hit->normal;
+                    min_ray->point = ray_hit->point;
+                    new_index = i;
+                }
+            }
+            ShaderInput reflect_input;
+            reflect_input.is_point_in_shadow = false;
+            reflect_input.direction_to_light = glm::normalize(light->GetDirectionToLight(min_ray->point));
+            reflect_input.normal = glm::normalize(min_ray->normal);
+            reflect_input.point = min_ray->point;
+            reflect_input.direction_to_eye = glm::normalize(view_ray->GetOrigin() - min_ray->point);
+            reflect_input.light_intensity = light->GetIntensityAt(min_ray->point);
+
+            std::shared_ptr <acgm::Ray> shadow_ray = std::make_shared<acgm::Ray>(input.point, input.direction_to_light, bias_);
+
+            min_ray->ray_param = INFINITY;
+
+            //! Search for nearest intersect shadow ray x model
+            for (int i = 0; i < models_.size(); i++)
+            {
+                std::optional<HitResult> ray_hit = models_.at(i)->Intersect(shadow_ray);
+
+                if (ray_hit->ray_param > 0.0f && ray_hit->ray_param < min_ray->ray_param)
+                {
+                    min_ray->ray_param = ray_hit->ray_param;
+                }
+            }
+
+            //! Find out, if the point is in shadow
+            float get_distance = glm::distance(input.point, light->GetPosition());
+
+            if (min_ray->ray_param < get_distance)
+            {
+                reflect_input.is_point_in_shadow = true;
+            }
+            return c.color * (1 - c.glossiness) + ReflectionColor(reflected_ray, reflect_input, new_index, depth - 1, image);
         }
     }
 }

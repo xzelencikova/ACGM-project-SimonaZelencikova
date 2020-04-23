@@ -12,7 +12,8 @@ namespace acgm
         //! Phong Shader constructor
         explicit PhongShader(const cogs::Color3f color, const float shininess, const float ambient, const float diffuse, const float specular, const float glossiness);
         //! Calculate shader color
-        virtual cogs::Color3f CalculateColor(const ShaderInput& input) const override;
+        virtual Color CalculateColor(const ShaderInput& input) const override;
+        virtual float GetGlossiness() const override;
 
     private:
         //! Phong shader variables

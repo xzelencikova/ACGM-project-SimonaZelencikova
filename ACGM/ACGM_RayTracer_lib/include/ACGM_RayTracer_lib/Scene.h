@@ -18,11 +18,13 @@ namespace acgm
     public:
         //! Scene constructor
         Scene(const std::shared_ptr<acgm::Camera>& camera, const std::shared_ptr<acgm::Light>& light, const std::vector<std::shared_ptr<acgm::Model>>& models, 
-            const glm::vec3 &enviro_up, const glm::vec3& enviro_seam, const float bias, std::string enviro_image_file);
+            const glm::vec3 &enviro_up, const glm::vec3& enviro_seam, const float bias, std::string enviro_image_file, const float max_depth);
         ~Scene() = default;
 
         //! RayTrace the scene
         void Raytrace(hiro::draw::RasterRenderer &renderer) const;
+        //! Recursion to calculate glossiness color
+        cogs::Color3f ReflectionColor(std::shared_ptr<acgm::Ray> view_ray, ShaderInput input, int index, int max_depth, std::shared_ptr<acgm::Image> image) const;
 
     private:
         //! Scene camera, light and models
@@ -35,5 +37,6 @@ namespace acgm
         const float bias_;
         //! Image file path
         std::string enviro_image_file_;
+        int max_depth_;
   };
 }

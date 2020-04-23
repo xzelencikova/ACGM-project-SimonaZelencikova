@@ -16,6 +16,12 @@ namespace acgm
         bool is_point_in_shadow;
     };
 
+    struct Color
+    {
+        cogs::Color3f color;
+        float glossiness;
+    };
+
     //! Representation of a shader
     class Shader
     {
@@ -25,7 +31,7 @@ namespace acgm
         virtual ~Shader() = default;
 
         //! Calculate shader color
-        virtual cogs::Color3f CalculateColor(const ShaderInput& input) const;
-
+        virtual Color CalculateColor(const ShaderInput& input) const = 0;
+        virtual float GetGlossiness() const = 0;
     };
 }

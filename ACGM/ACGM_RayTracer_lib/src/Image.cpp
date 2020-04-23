@@ -2,6 +2,7 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <ACGM_RayTracer_lib/stb_image.h>
+#include <iostream>
 
 
 acgm::Image::Image(const std::string enviro_image_file):
@@ -24,7 +25,10 @@ void acgm::Image::FreeImage() const
 //! Color of image pixel
 cogs::Color3f acgm::Image::GetColorAt(const glm::vec2& uv) const 
 {
-	uint8_t pixel_offset = uint8_t(uv.x * int(width_) + int(height_) * uv.y) * 3;
+	uint32_t x = uint32_t(uv.x * width_) % width_;
+	uint32_t y = uint32_t(uv.y * height_) % height_;
+	uint32_t pixel_offset = (y * width_ + x) * 3;
+	//std::cout <<uv.x<<','<<uv.y<<std::endl;
 	//printf("%d\n", pixel_offset);
 	float r = float(img_data_[pixel_offset]) / 256.0f;
 	float g = float(img_data_[pixel_offset + 1]) / 256.0f;

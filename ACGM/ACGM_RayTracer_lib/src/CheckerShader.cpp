@@ -7,8 +7,13 @@ acgm::CheckerShader::CheckerShader(const float cube_size, const std::shared_ptr<
 {
 }
 
+float acgm::CheckerShader::GetGlossiness() const 
+{
+	return shader0_->GetGlossiness();
+}
+
 //! Calculate color for checker shader
-cogs::Color3f acgm::CheckerShader::CalculateColor(const ShaderInput& input) const
+acgm::Color acgm::CheckerShader::CalculateColor(const ShaderInput& input) const
 {
 	float bias = 0.001;
 	int32_t choose_shader = floor((input.point.x / cube_size_) + bias) + floor((input.point.y / cube_size_) + bias) + floor((input.point.z / cube_size_) + bias);

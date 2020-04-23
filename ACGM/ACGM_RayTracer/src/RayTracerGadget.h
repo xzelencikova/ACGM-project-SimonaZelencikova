@@ -16,7 +16,7 @@ public:
 
     //! Generate scene and gui methods
     void RayTracerGadget::GenerateGui(hiro::GuiGenerator& gui) override;
-    static void RayTracerGadget::ImportAndRenderScene(std::string fileName);
+    static void RayTracerGadget::ImportAndRenderScene(std::string fileName, int depth);
 
     void Initialize() override;
 

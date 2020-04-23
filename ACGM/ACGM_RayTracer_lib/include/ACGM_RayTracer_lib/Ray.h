@@ -16,6 +16,7 @@ namespace acgm
         glm::vec3 GetDirection() const;
         float GetBias() const;
         glm::vec3 GetPoint(const float t) const;
+        glm::vec3 GetReflectionDirection(const glm::vec3 &normal) const;
 
     private:
         //! Ray origin and direction vectors and bias value

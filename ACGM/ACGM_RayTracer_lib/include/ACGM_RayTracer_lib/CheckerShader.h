@@ -12,8 +12,8 @@ namespace acgm
         //! Checker Shader constructor
         explicit CheckerShader(const float cube_size, const std::shared_ptr<Shader> shader0, const std::shared_ptr<Shader> shader1);
         //! Calculate shader color
-        virtual cogs::Color3f CalculateColor(const ShaderInput& input) const override;
-
+        virtual Color CalculateColor(const ShaderInput& input) const override;
+        virtual float GetGlossiness() const override;
     private:
         //! Shader cube size and shaders
         float cube_size_;

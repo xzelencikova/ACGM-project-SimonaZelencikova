@@ -185,7 +185,7 @@ std::shared_ptr<acgm::Shader> acgm::SceneImporter::ReadShader()
         GetLine();
 
         //! Initialize Phong shader
-        shader = std::make_shared<acgm::PhongShader>(color, shininess, ambient, diffuse, specular);
+        shader = std::make_shared<acgm::PhongShader>(color, shininess, ambient, diffuse, specular, glossiness);
     }
     if (shader_type == SHADERTYPE_CHECKER)
     {
@@ -254,6 +254,6 @@ std::shared_ptr<acgm::Scene> acgm::SceneImporter::ReadScene()
     const auto light = ReadLight();
     const auto models = ReadModels();
 
-    std::shared_ptr<acgm::Scene> scene = std::make_shared<acgm::Scene>(camera, light, models, enviro_up, enviro_seam, bias, enviro_image_file);
+    std::shared_ptr<acgm::Scene> scene = std::make_shared<acgm::Scene>(camera, light, models, enviro_up, enviro_seam, bias, enviro_image_file, 5);
     return scene;
 }

@@ -27,3 +27,10 @@ glm::vec3 acgm::Ray::GetPoint(const float t) const
 {
     return origin_ + (t * direction_);
 }
+
+//! Calculate reflection of the ray
+glm::vec3 acgm::Ray::GetReflectionDirection(const glm::vec3& normal) const
+{
+    float norm_direction_dot = glm::dot(direction_, normal);
+    return -2 * norm_direction_dot * normal + direction_;
+}
