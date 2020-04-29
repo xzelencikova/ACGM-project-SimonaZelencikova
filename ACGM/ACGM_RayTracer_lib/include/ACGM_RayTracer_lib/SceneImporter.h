@@ -34,6 +34,7 @@ namespace acgm
         bool Import(const std::string &filename);
         std::shared_ptr<acgm::Scene> GetScene() const;
         RenderOptions GetRenderOptions() const;
+        void SetDepths(int transparency_depth, int reflection_depth);
 
     private:
         std::ifstream stream_;
@@ -52,6 +53,9 @@ namespace acgm
         std::shared_ptr<Shader> ReadShader();
         std::shared_ptr<Light> ReadLight();
         std::shared_ptr<Scene> ReadScene();
+
+        int max_reflection_depth_;
+        int max_transparency_depth_;
     };
 
 }

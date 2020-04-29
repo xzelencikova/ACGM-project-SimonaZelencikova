@@ -7,8 +7,10 @@
 
 //! Scene constructor
 acgm::Scene::Scene(const std::shared_ptr<acgm::Camera>& camera, const std::shared_ptr<acgm::Light>& light, const std::vector<std::shared_ptr<acgm::Model>>& models,
-    const glm::vec3& enviro_up, const glm::vec3& enviro_seam, float bias, std::string enviro_image_file, const float max_depth) :
-    models_(models), camera(camera), light(light), enviro_up_(enviro_up), enviro_seam_(enviro_seam), bias_(bias), enviro_image_file_(enviro_image_file), max_depth_(max_depth)
+    const glm::vec3& enviro_up, const glm::vec3& enviro_seam, float bias, std::string enviro_image_file, int max_reflection_depth, int max_transparency_depth,
+    const float index_of_refraction) :
+    models_(models), camera(camera), light(light), enviro_up_(enviro_up), enviro_seam_(enviro_seam), bias_(bias), enviro_image_file_(enviro_image_file), 
+    max_reflection_depth_(max_reflection_depth), max_transparency_depth_(max_transparency_depth), index_of_refraction_(index_of_refraction)
 {
 }
 
@@ -85,12 +87,12 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 input.is_point_in_shadow = true;
             }
 
-//            std::shared_ptr<acgm::Ray> pom_ray = std::make_shared<acgm::Ray>(input.point - camera->GetPosition(), -direction, bias_);
-            renderer.SetPixel(column, renderer.GetResolution().y - row - 1, ReflectionColor(ray, input, index, max_depth_, image));
+            renderer.SetPixel(column, renderer.GetResolution().y - row - 1, ReflectionColor(ray, input, index, max_reflection_depth_, image));
 
             x += dx;
         }
     }
+    image->FreeImage();
 }
 
 //! Calculate glossiness color for a pixel
@@ -120,7 +122,7 @@ cogs::Color3f acgm::Scene::ReflectionColor(std::shared_ptr<acgm::Ray> view_ray, 
         Color c = models_.at(index)->GetShader()->CalculateColor(input);
         if (c.glossiness > -FLT_EPSILON && c.glossiness < FLT_EPSILON || depth == 1)
         {
-            return models_.at(index)->GetShader()->CalculateColor(input).color;
+            return c.color;
         }
         else
         {
@@ -144,13 +146,13 @@ cogs::Color3f acgm::Scene::ReflectionColor(std::shared_ptr<acgm::Ray> view_ray, 
             }
             ShaderInput reflect_input;
             reflect_input.is_point_in_shadow = false;
-            reflect_input.direction_to_light = glm::normalize(light->GetDirectionToLight(min_ray->point));
             reflect_input.normal = glm::normalize(min_ray->normal);
+            reflect_input.direction_to_light = glm::normalize(light->GetDirectionToLight(min_ray->point));
             reflect_input.point = min_ray->point;
             reflect_input.direction_to_eye = glm::normalize(view_ray->GetOrigin() - min_ray->point);
             reflect_input.light_intensity = light->GetIntensityAt(min_ray->point);
 
-            std::shared_ptr <acgm::Ray> shadow_ray = std::make_shared<acgm::Ray>(input.point, input.direction_to_light, bias_);
+            std::shared_ptr <acgm::Ray> shadow_ray = std::make_shared<acgm::Ray>(reflect_input.point, reflect_input.direction_to_light, bias_);
 
             min_ray->ray_param = INFINITY;
 
@@ -166,8 +168,8 @@ cogs::Color3f acgm::Scene::ReflectionColor(std::shared_ptr<acgm::Ray> view_ray, 
             }
 
             //! Find out, if the point is in shadow
-            float get_distance = glm::distance(input.point, light->GetPosition());
-
+            float get_distance = glm::distance(reflect_input.point, light->GetPosition());
+            
             if (min_ray->ray_param < get_distance)
             {
                 reflect_input.is_point_in_shadow = true;

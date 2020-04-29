@@ -18,7 +18,8 @@ namespace acgm
     public:
         //! Scene constructor
         Scene(const std::shared_ptr<acgm::Camera>& camera, const std::shared_ptr<acgm::Light>& light, const std::vector<std::shared_ptr<acgm::Model>>& models, 
-            const glm::vec3 &enviro_up, const glm::vec3& enviro_seam, const float bias, std::string enviro_image_file, const float max_depth);
+            const glm::vec3 &enviro_up, const glm::vec3& enviro_seam, const float bias, std::string enviro_image_file, int max_reflection_depth, int max_transparency_depth,
+            const float index_of_refraction);
         ~Scene() = default;
 
         //! RayTrace the scene
@@ -37,6 +38,8 @@ namespace acgm
         const float bias_;
         //! Image file path
         std::string enviro_image_file_;
-        int max_depth_;
+        int max_reflection_depth_;
+        int max_transparency_depth_;
+        const float index_of_refraction_;
   };
 }

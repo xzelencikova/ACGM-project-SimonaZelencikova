@@ -185,7 +185,7 @@ std::shared_ptr<acgm::Shader> acgm::SceneImporter::ReadShader()
         GetLine();
 
         //! Initialize Phong shader
-        shader = std::make_shared<acgm::PhongShader>(color, shininess, ambient, diffuse, specular, glossiness);
+        shader = std::make_shared<acgm::PhongShader>(color, shininess, ambient, diffuse, specular, glossiness, transparency, refractive_index);
     }
     if (shader_type == SHADERTYPE_CHECKER)
     {
@@ -254,6 +254,16 @@ std::shared_ptr<acgm::Scene> acgm::SceneImporter::ReadScene()
     const auto light = ReadLight();
     const auto models = ReadModels();
 
-    std::shared_ptr<acgm::Scene> scene = std::make_shared<acgm::Scene>(camera, light, models, enviro_up, enviro_seam, bias, enviro_image_file, 5);
+    printf("%d %d\n", max_transparency_depth_, max_reflection_depth_);
+
+    std::shared_ptr<acgm::Scene> scene = std::make_shared<acgm::Scene>(camera, light, models, enviro_up, enviro_seam, bias, enviro_image_file, 
+        max_reflection_depth_, max_transparency_depth_, index_of_refraction);
     return scene;
+}
+
+//! Method to set depths from GUI
+void acgm::SceneImporter::SetDepths(int transparency_depth, int reflection_depth)
+{
+    max_transparency_depth_ = transparency_depth;
+    max_reflection_depth_ = reflection_depth;
 }
