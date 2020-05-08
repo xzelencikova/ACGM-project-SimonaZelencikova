@@ -14,7 +14,6 @@ namespace acgm
             const float transparency, const float refractive_index);
         //! Calculate shader color
         virtual Color CalculateColor(const ShaderInput& input) const override;
-        virtual float GetGlossiness() const override;
 
     private:
         //! Phong shader variables

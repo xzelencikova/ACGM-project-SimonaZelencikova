@@ -18,8 +18,7 @@ namespace acgm
         //! Color of image pixel
         cogs::Color3f Image::GetColorAt(const glm::vec2 &uv) const;
         //! Free image data from memory
-        void FreeImage() const;
-
+        
     private:
         //! Image path
         const std::string enviro_image_file_;

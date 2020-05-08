@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include <optional>
 
 
 namespace acgm
@@ -16,7 +17,11 @@ namespace acgm
         glm::vec3 GetDirection() const;
         float GetBias() const;
         glm::vec3 GetPoint(const float t) const;
+
+        //! Calculate reflected direction of the ray
         glm::vec3 GetReflectionDirection(const glm::vec3 &normal) const;
+        //! Calculate refracted direction of the ray
+        std::optional<glm::vec3> GetRefractionDirection(const float index_of_refraction, glm::vec3 &normal) const;
 
     private:
         //! Ray origin and direction vectors and bias value

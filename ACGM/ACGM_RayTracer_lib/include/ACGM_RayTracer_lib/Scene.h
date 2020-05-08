@@ -25,7 +25,7 @@ namespace acgm
         //! RayTrace the scene
         void Raytrace(hiro::draw::RasterRenderer &renderer) const;
         //! Recursion to calculate glossiness color
-        cogs::Color3f ReflectionColor(std::shared_ptr<acgm::Ray> view_ray, ShaderInput input, int index, int max_depth, std::shared_ptr<acgm::Image> image) const;
+        cogs::Color3f ReflectionColor(std::shared_ptr<acgm::Ray> view_ray, ShaderInput input, int index, int max_reflection, int max_transparency, std::shared_ptr<acgm::Image> image) const;
 
     private:
         //! Scene camera, light and models

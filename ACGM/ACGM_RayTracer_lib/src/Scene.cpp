@@ -55,6 +55,7 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                     index = i;
                 }
             }
+
             //! Set input params for shader, initializing is_point_in_shadow to false for now
             ShaderInput input;
             input.is_point_in_shadow = false;
@@ -87,16 +88,15 @@ void acgm::Scene::Raytrace(hiro::draw::RasterRenderer &renderer) const
                 input.is_point_in_shadow = true;
             }
 
-            renderer.SetPixel(column, renderer.GetResolution().y - row - 1, ReflectionColor(ray, input, index, max_reflection_depth_, image));
+            renderer.SetPixel(column, renderer.GetResolution().y - row - 1, ReflectionColor(ray, input, index, max_reflection_depth_, max_transparency_depth_, image));
 
             x += dx;
         }
     }
-    image->FreeImage();
 }
 
 //! Calculate glossiness color for a pixel
-cogs::Color3f acgm::Scene::ReflectionColor(std::shared_ptr<acgm::Ray> view_ray, ShaderInput input, int index, int depth, std::shared_ptr<acgm::Image> image) const
+cogs::Color3f acgm::Scene::ReflectionColor(std::shared_ptr<acgm::Ray> view_ray, ShaderInput input, int index, int max_reflection, int max_transparency, std::shared_ptr<acgm::Image> image) const
 {
     if (index == -1)
     {
@@ -120,61 +120,139 @@ cogs::Color3f acgm::Scene::ReflectionColor(std::shared_ptr<acgm::Ray> view_ray, 
     else
     {
         Color c = models_.at(index)->GetShader()->CalculateColor(input);
-        if (c.glossiness > -FLT_EPSILON && c.glossiness < FLT_EPSILON || depth == 1)
+        cogs::Color3f transparency_color = cogs::Color3f(0.0f, 0.0f, 0.0f);
+
+        if (c.transparency > 0.0f && max_transparency > 1)
         {
-            return c.color;
-        }
-        else
-        {
-            glm::vec3 reflected_direction = view_ray->GetReflectionDirection(input.normal);
-            std::shared_ptr<acgm::Ray> reflected_ray = std::make_shared<acgm::Ray>(input.point, reflected_direction, view_ray->GetBias());
-            std::optional<acgm::HitResult> min_ray;
-            min_ray->ray_param = INFINITY;
-            int new_index = -1;
+            float ior;
+            if (glm::dot(input.normal, view_ray->GetDirection()) < 0)
+            {
+                ior = index_of_refraction_ / c.refractive_index;
+            }
+            else
+            {
+                ior = c.refractive_index / index_of_refraction_;
+            }
+            int ref = 0;
+
+            std::optional<glm::vec3> refraction_direction = view_ray->GetRefractionDirection(ior, input.normal);
+            if (refraction_direction == std::nullopt)
+            {
+                refraction_direction = view_ray->GetReflectionDirection(input.normal);
+                ref = 1;
+            }
+            
+            std::shared_ptr<acgm::Ray> transparent_ray = std::make_shared<acgm::Ray>(input.point, glm::vec3(refraction_direction->x, refraction_direction->y, refraction_direction->z), view_ray->GetBias());
+
+            std::optional<acgm::HitResult> min_ray_t;
+
+            min_ray_t->ray_param = INFINITY;
+            int new_index_t = -1;
 
             for (int i = 0; i < models_.size(); i++)
             {
-                std::optional<HitResult> ray_hit = models_.at(i)->Intersect(reflected_ray);
+                std::optional<HitResult> ray_hit = models_.at(i)->Intersect(transparent_ray);
 
-                if (ray_hit->ray_param > 0.0f && ray_hit->ray_param < min_ray->ray_param)
+                if (ray_hit->ray_param > 0.0f && ray_hit->ray_param < min_ray_t->ray_param)
                 {
-                    min_ray->ray_param = ray_hit->ray_param;
-                    min_ray->normal = ray_hit->normal;
-                    min_ray->point = ray_hit->point;
-                    new_index = i;
+                    min_ray_t->ray_param = ray_hit->ray_param;
+                    min_ray_t->normal = ray_hit->normal;
+                    min_ray_t->point = ray_hit->point;
+                    new_index_t = i;
                 }
             }
+
             ShaderInput reflect_input;
             reflect_input.is_point_in_shadow = false;
-            reflect_input.normal = glm::normalize(min_ray->normal);
-            reflect_input.direction_to_light = glm::normalize(light->GetDirectionToLight(min_ray->point));
-            reflect_input.point = min_ray->point;
-            reflect_input.direction_to_eye = glm::normalize(view_ray->GetOrigin() - min_ray->point);
-            reflect_input.light_intensity = light->GetIntensityAt(min_ray->point);
+            reflect_input.normal = glm::normalize(min_ray_t->normal);
+            reflect_input.direction_to_light = glm::normalize(light->GetDirectionToLight(min_ray_t->point));
+            reflect_input.point = min_ray_t->point;
+            reflect_input.direction_to_eye = glm::normalize(view_ray->GetOrigin() - min_ray_t->point);
+            reflect_input.light_intensity = light->GetIntensityAt(min_ray_t->point);
 
             std::shared_ptr <acgm::Ray> shadow_ray = std::make_shared<acgm::Ray>(reflect_input.point, reflect_input.direction_to_light, bias_);
 
-            min_ray->ray_param = INFINITY;
+            min_ray_t->ray_param = INFINITY;
 
             //! Search for nearest intersect shadow ray x model
             for (int i = 0; i < models_.size(); i++)
             {
                 std::optional<HitResult> ray_hit = models_.at(i)->Intersect(shadow_ray);
 
-                if (ray_hit->ray_param > 0.0f && ray_hit->ray_param < min_ray->ray_param)
+                if (ray_hit->ray_param > 0.0f && ray_hit->ray_param < min_ray_t->ray_param)
                 {
-                    min_ray->ray_param = ray_hit->ray_param;
+                    min_ray_t->ray_param = ray_hit->ray_param;
                 }
             }
 
             //! Find out, if the point is in shadow
             float get_distance = glm::distance(reflect_input.point, light->GetPosition());
-            
-            if (min_ray->ray_param < get_distance)
+
+            if (min_ray_t->ray_param < get_distance)
             {
                 reflect_input.is_point_in_shadow = true;
             }
-            return c.color * (1 - c.glossiness) + ReflectionColor(reflected_ray, reflect_input, new_index, depth - 1, image);
+
+            transparency_color += c.transparency * ReflectionColor(transparent_ray, reflect_input, new_index_t, max_reflection, max_transparency - 1, image);
         }
+
+        if (c.glossiness > -FLT_EPSILON && c.glossiness < FLT_EPSILON || max_reflection == 1)
+        {
+            return c.color * (1 - c.transparency) + transparency_color;
+        }
+        
+        glm::vec3 reflected_direction = view_ray->GetReflectionDirection(input.normal);
+        std::shared_ptr<acgm::Ray> reflected_ray = std::make_shared<acgm::Ray>(input.point, reflected_direction, view_ray->GetBias());
+
+        std::optional<acgm::HitResult> min_ray;
+            
+        min_ray->ray_param = INFINITY;
+        int new_index = -1;
+            
+        for (int i = 0; i < models_.size(); i++)
+        {
+            std::optional<HitResult> ray_hit = models_.at(i)->Intersect(reflected_ray);
+
+            if (ray_hit->ray_param > 0.0f && ray_hit->ray_param < min_ray->ray_param)
+            {
+                 min_ray->ray_param = ray_hit->ray_param;
+                 min_ray->normal = ray_hit->normal;
+                 min_ray->point = ray_hit->point;
+                 new_index = i;
+            }
+        }
+
+        ShaderInput reflect_input;
+        reflect_input.is_point_in_shadow = false;
+        reflect_input.normal = glm::normalize(min_ray->normal);
+        reflect_input.direction_to_light = glm::normalize(light->GetDirectionToLight(min_ray->point));
+        reflect_input.point = min_ray->point;
+        reflect_input.direction_to_eye = glm::normalize(view_ray->GetOrigin() - min_ray->point);
+        reflect_input.light_intensity = light->GetIntensityAt(min_ray->point);
+
+        std::shared_ptr <acgm::Ray> shadow_ray = std::make_shared<acgm::Ray>(reflect_input.point, reflect_input.direction_to_light, bias_);
+
+        min_ray->ray_param = INFINITY;
+
+        //! Search for nearest intersect shadow ray x model
+        for (int i = 0; i < models_.size(); i++)
+        {
+            std::optional<HitResult> ray_hit = models_.at(i)->Intersect(shadow_ray);
+
+            if (ray_hit->ray_param > 0.0f && ray_hit->ray_param < min_ray->ray_param)
+            {
+                min_ray->ray_param = ray_hit->ray_param;
+            }
+        }
+
+        //! Find out, if the point is in shadow
+        float get_distance = glm::distance(reflect_input.point, light->GetPosition());
+            
+        if (min_ray->ray_param < get_distance)
+        {
+            reflect_input.is_point_in_shadow = true;
+        }
+
+        return c.color * (1 - c.glossiness - c.transparency) + c.glossiness * ReflectionColor(reflected_ray, reflect_input, new_index, max_reflection - 1, max_transparency, image) + transparency_color;
     }
 }

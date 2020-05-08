@@ -20,6 +20,8 @@ namespace acgm
     {
         cogs::Color3f color;
         float glossiness;
+        float transparency;
+        float refractive_index;
     };
 
     //! Representation of a shader
@@ -32,6 +34,5 @@ namespace acgm
 
         //! Calculate shader color
         virtual Color CalculateColor(const ShaderInput& input) const = 0;
-        virtual float GetGlossiness() const = 0;
     };
 }

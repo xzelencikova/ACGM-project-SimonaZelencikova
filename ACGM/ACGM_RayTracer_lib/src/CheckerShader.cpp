@@ -7,11 +7,6 @@ acgm::CheckerShader::CheckerShader(const float cube_size, const std::shared_ptr<
 {
 }
 
-float acgm::CheckerShader::GetGlossiness() const 
-{
-	return shader0_->GetGlossiness();
-}
-
 //! Calculate color for checker shader
 acgm::Color acgm::CheckerShader::CalculateColor(const ShaderInput& input) const
 {
