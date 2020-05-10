@@ -254,8 +254,6 @@ std::shared_ptr<acgm::Scene> acgm::SceneImporter::ReadScene()
     const auto light = ReadLight();
     const auto models = ReadModels();
 
-    printf("%d %d\n", max_transparency_depth_, max_reflection_depth_);
-
     std::shared_ptr<acgm::Scene> scene = std::make_shared<acgm::Scene>(camera, light, models, enviro_up, enviro_seam, bias, enviro_image_file, 
         max_reflection_depth_, max_transparency_depth_, index_of_refraction);
     return scene;

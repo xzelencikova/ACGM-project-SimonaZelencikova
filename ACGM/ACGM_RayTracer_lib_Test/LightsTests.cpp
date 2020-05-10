@@ -43,5 +43,4 @@ TEST(LightsTests, SpotLightIntensityTest)
         glm::epsilon<float>()
         ));
 
-    //EXPECT_EQ(1, 1);
 }

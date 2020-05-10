@@ -33,8 +33,8 @@ std::optional<acgm::HitResult> acgm::Mesh::Intersect(std::shared_ptr<acgm::Ray>&
         if (hit->ray_param > 0.0f && hit->ray_param < min_hit->ray_param)
         {
             min_hit->ray_param = hit->ray_param;
-            min_hit->normal = glm::cross(triangle.GetVertexY() - triangle.GetVertexX(), triangle.GetVertexZ() - triangle.GetVertexX());
-            min_hit->point = ray->GetPoint(min_hit->ray_param) + (min_hit->normal * ray->GetBias());
+            min_hit->normal = glm::normalize(glm::cross(triangle.GetVertexY() - triangle.GetVertexX(), triangle.GetVertexZ() - triangle.GetVertexX()));
+            min_hit->point = ray->GetPoint(min_hit->ray_param);
         }
     }
     return min_hit;

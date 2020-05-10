@@ -13,11 +13,14 @@ namespace acgm
     public:
         //! Image constructor
         explicit Image(const std::string enviro_image_file);
+        //! Destructor with image deletion
         virtual ~Image() = default;
 
         //! Color of image pixel
         cogs::Color3f Image::GetColorAt(const glm::vec2 &uv) const;
-        //! Free image data from memory
+
+        //! Function to free image data
+        void FreeImage();
         
     private:
         //! Image path

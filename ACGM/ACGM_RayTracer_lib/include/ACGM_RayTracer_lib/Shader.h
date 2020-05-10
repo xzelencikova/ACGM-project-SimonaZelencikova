@@ -5,7 +5,7 @@
 
 namespace acgm
 {
-    //! structure for shader input
+    //! Structure for shader input
     struct ShaderInput
     {
         glm::vec3 point;
@@ -15,7 +15,7 @@ namespace acgm
         float light_intensity;
         bool is_point_in_shadow;
     };
-
+    //! Structure for color and the attributes for reflectíon and refraction
     struct Color
     {
         cogs::Color3f color;

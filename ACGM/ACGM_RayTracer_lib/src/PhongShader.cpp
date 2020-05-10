@@ -24,8 +24,8 @@ acgm::Color acgm::PhongShader::CalculateColor(const ShaderInput& input) const
     }
 
     //! Calculate cosine angle
-    float size_normal = sqrt(pow(input.normal.x, 2) + pow(input.normal.y, 2) + pow(input.normal.z, 2));
-    float size_light_direction = sqrt(pow(input.direction_to_light.x, 2) + pow(input.direction_to_light.y, 2) + pow(input.direction_to_light.z, 2));
+    float size_normal = sqrt(input.normal.x * input.normal.x + input.normal.y * input.normal.y + input.normal.z * input.normal.z);
+    float size_light_direction = sqrt(input.direction_to_light.x * input.direction_to_light.x + input.direction_to_light.y * input.direction_to_light.y + input.direction_to_light.z * input.direction_to_light.z);
     float cosine_angle = glm::dot(input.normal, input.direction_to_light) / (size_light_direction * size_normal);
     //! Calculate Phong Diffuse Shading
     float diffuse_phong = diffuse_ * input.light_intensity * cosine_angle;

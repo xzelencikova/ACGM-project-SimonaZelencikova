@@ -1,6 +1,6 @@
 #include <ACGM_RayTracer_lib/Shader.h>
 
-//! Constructors for shader
+//! Constructor for shader
 acgm::Shader::Shader()
 {
 }

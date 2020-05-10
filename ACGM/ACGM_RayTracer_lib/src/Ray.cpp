@@ -1,4 +1,5 @@
 #include <ACGM_RayTracer_lib/Ray.h>
+#include <iostream>
 
 
 //! Ray constructor
@@ -36,25 +37,33 @@ glm::vec3 acgm::Ray::GetReflectionDirection(const glm::vec3& normal) const
 }
 
 //! Calculate refracted direction of the ray
-std::optional<glm::vec3> acgm::Ray::GetRefractionDirection(const float index_of_refraction, glm::vec3& normal) const
+std::optional<glm::vec3> acgm::Ray::GetRefractionDirection(const float index_of_refraction, const float index_of_refraction2, glm::vec3& normal) const
 {
     float cos_direction = glm::dot(direction_, normal);
+    float ior;
 
+    //! Decide, if it's goind inside or outside of the object
     if (cos_direction < 0)
     {
+        ior = index_of_refraction / index_of_refraction2;
         cos_direction = -cos_direction;
     }
-    else normal = -normal;
+    else
+    {
+        normal = -normal;
+        ior = index_of_refraction2 / index_of_refraction;
+    }
 
-    float pow_ior = index_of_refraction * index_of_refraction;
+    float pow_ior = ior * ior;
     float cos_refract = 1 - pow_ior * (1 - cos_direction * cos_direction);
+    //! If it's internal reflection, return std::nullopt
     if (cos_refract < 0)
     {
         return std::nullopt;
     }
 
     float cos_refracted_direction = std::sqrt(cos_refract);
-    return index_of_refraction * direction_ + normal * (index_of_refraction * cos_direction - cos_refracted_direction);
+    return ior * direction_ + normal * (ior * cos_direction - cos_refracted_direction);
 }
 
 // Reflected and refracted ray directions inspired by https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel

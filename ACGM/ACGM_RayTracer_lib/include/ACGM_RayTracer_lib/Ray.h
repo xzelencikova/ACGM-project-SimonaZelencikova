@@ -21,7 +21,7 @@ namespace acgm
         //! Calculate reflected direction of the ray
         glm::vec3 GetReflectionDirection(const glm::vec3 &normal) const;
         //! Calculate refracted direction of the ray
-        std::optional<glm::vec3> GetRefractionDirection(const float index_of_refraction, glm::vec3 &normal) const;
+        std::optional<glm::vec3> GetRefractionDirection(const float index_of_refraction, const float index_of_refraction2, glm::vec3 &normal) const;
 
     private:
         //! Ray origin and direction vectors and bias value

@@ -24,8 +24,10 @@ namespace acgm
 
         //! RayTrace the scene
         void Raytrace(hiro::draw::RasterRenderer &renderer) const;
-        //! Recursion to calculate glossiness color
-        cogs::Color3f ReflectionColor(std::shared_ptr<acgm::Ray> view_ray, ShaderInput input, int index, int max_reflection, int max_transparency, std::shared_ptr<acgm::Image> image) const;
+        //! Recursion to calculate final color of pixel
+        cogs::Color3f CalculateColor(std::shared_ptr<acgm::Ray> view_ray, ShaderInput input, int index, int max_reflection, int max_transparency, std::shared_ptr<acgm::Image> image) const;
+        //! Function to find shadows
+        ShaderInput CastShadowRay(std::optional<acgm::HitResult> hit_point, const glm::vec3& origin) const;
 
     private:
         //! Scene camera, light and models
@@ -38,8 +40,10 @@ namespace acgm
         const float bias_;
         //! Image file path
         std::string enviro_image_file_;
+        //! Limit reflection and trasparency hits
         int max_reflection_depth_;
         int max_transparency_depth_;
+        //! Scene index of refraction
         const float index_of_refraction_;
   };
 }

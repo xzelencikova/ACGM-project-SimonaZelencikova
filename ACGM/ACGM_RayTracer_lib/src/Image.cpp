@@ -10,6 +10,7 @@ acgm::Image::Image(const std::string enviro_image_file):
 {
 	if (enviro_image_file_.compare("") != 0)
 	{
+		//! Load image
 		img_data_ = stbi_load(enviro_image_file_.c_str(), &width_, &height_, &bpp_, 3);
 	}
 }
@@ -17,13 +18,21 @@ acgm::Image::Image(const std::string enviro_image_file):
 //! Color of image pixel
 cogs::Color3f acgm::Image::GetColorAt(const glm::vec2& uv) const 
 {
+	//! Calculate coordinates of pixel
 	uint32_t x = uint32_t(uv.x * width_) % width_;
 	uint32_t y = uint32_t(uv.y * height_) % height_;
 	uint32_t pixel_offset = (y * width_ + x) * 3;
 	
+	//! Get colors r,g,b in range 0-1
 	float r = float(img_data_[pixel_offset]) / 255.0f;
 	float g = float(img_data_[pixel_offset + 1]) / 255.0f;
 	float b = float(img_data_[pixel_offset + 2]) / 255.0f;
 	
 	return cogs::Color3f(r, g, b);
+}
+
+//! Function to free image data
+void acgm::Image::FreeImage()
+{
+	stbi_image_free(img_data_);
 }
