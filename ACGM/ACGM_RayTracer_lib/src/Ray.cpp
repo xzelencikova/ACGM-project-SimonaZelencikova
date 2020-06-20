@@ -1,5 +1,4 @@
 #include <ACGM_RayTracer_lib/Ray.h>
-#include <iostream>
 
 
 //! Ray constructor

@@ -11,7 +11,7 @@ namespace acgm
     {
     public:
         //! Mesh constructor
-        explicit Mesh(const std::string file_name, const glm::mat4 transform, const std::string name);
+        explicit Mesh(const std::string file_name, const glm::mat4 transform, const std::string name, const bool smooth_normal);
         ~Mesh() = default;
         //! Mesh intersection with ray
         virtual std::optional<acgm::HitResult> Intersect(std::shared_ptr<acgm::Ray>& ray) const override;
@@ -23,5 +23,6 @@ namespace acgm
         const glm::mat4 transform_;
         //! Mesh object
         cogs::Mesh mesh_;
+        const bool smooth_normal_;
     };
 }

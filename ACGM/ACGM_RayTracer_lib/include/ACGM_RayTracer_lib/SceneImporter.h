@@ -35,6 +35,7 @@ namespace acgm
         std::shared_ptr<acgm::Scene> GetScene() const;
         RenderOptions GetRenderOptions() const;
         void SetDepths(int transparency_depth, int reflection_depth);
+        void SetSmooth(bool smooth_normal);
 
     private:
         std::ifstream stream_;
@@ -56,6 +57,7 @@ namespace acgm
 
         int max_reflection_depth_;
         int max_transparency_depth_;
+        bool smooth_normal_;
     };
 
 }

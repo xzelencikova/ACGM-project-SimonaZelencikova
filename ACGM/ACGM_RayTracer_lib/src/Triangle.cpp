@@ -55,7 +55,7 @@ std::optional<acgm::HitResult> acgm::Triangle::Intersect(std::shared_ptr<acgm::R
 
     acgm::HitResult hit;
     hit.ray_param = f * glm::dot(edge2, q);
-
+    hit.uv = glm::vec2(u, v);
     //! Return intersection
     return hit;
 }

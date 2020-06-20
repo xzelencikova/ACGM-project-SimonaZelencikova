@@ -12,6 +12,7 @@ namespace acgm
         glm::vec3 normal;
         glm::vec3 point;
         float ray_param;
+        glm::vec2 uv;
     };
     //! Model  - abstract base class for scene models
     class Model

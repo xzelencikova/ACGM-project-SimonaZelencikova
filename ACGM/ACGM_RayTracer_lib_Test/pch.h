@@ -11,7 +11,6 @@
 
 #include "gtest/gtest.h"
 #include <glm/gtc/epsilon.hpp>
-//#include <ACGM_RayTracer_lib/Triangle.h>
 
 #include <ACGM_RayTracer_lib/PointLight.h>
 #include <ACGM_RayTracer_lib/SpotLight.h>

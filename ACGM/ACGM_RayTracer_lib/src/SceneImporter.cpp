@@ -144,7 +144,8 @@ std::shared_ptr<acgm::Model> acgm::SceneImporter::ReadModel()
         const auto transform = ReadMat4();
 
         //! Initialize mesh model
-        model = std::make_shared<acgm::Mesh>(file_name, transform, model_name);
+        model = std::make_shared<acgm::Mesh>(file_name, transform, model_name, smooth_normal_);
+        printf("%d", smooth_normal_);
     }
 
     GetLine();
@@ -264,4 +265,9 @@ void acgm::SceneImporter::SetDepths(int transparency_depth, int reflection_depth
 {
     max_transparency_depth_ = transparency_depth;
     max_reflection_depth_ = reflection_depth;
+}
+
+void acgm::SceneImporter::SetSmooth(bool smooth_normal)
+{
+    smooth_normal_ = smooth_normal;
 }
